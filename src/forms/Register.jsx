@@ -1,14 +1,13 @@
 import React from "react";
 import { BiBot } from "react-icons/bi";
-import { FcGoogle } from "react-icons/fc";
 import { IoClose } from "react-icons/io5";
-
+import { Link } from "react-router-dom";
 export const Register = () => {
   return (
     <div className="w-screen h-screen flex items-center justify-center bg-zinc-600">
       <div className="flex relative flex-col px-24 py-8 gap-2 rounded-[50px] bg-zinc-100">
         <div className="absolute w-10 h-10 right-2 top-5 hover:bg-zinc-200 transition  flex items-center justify-center rounded-full">
-          <IoClose className="text-3xl cursor-pointer" />
+         <Link to="/"><IoClose className="text-3xl cursor-pointer" /></Link> 
         </div>
 
         <div className="flex flex-col items-center justify-center gap-4">
@@ -59,7 +58,7 @@ export const Register = () => {
         </form>
         <div className="text-base text-center flex flex-col gap-3">
           <p className="font-semibold text-zinc-700">
-            Already a member? <a href="" className="text-blue-500">Log in</a>
+            Already a member? <Link to="/login" className="text-blue-500">Log in</Link>
           </p>
         </div>
 

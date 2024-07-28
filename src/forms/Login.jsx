@@ -1,14 +1,15 @@
 import React from "react";
 import { BiBot } from "react-icons/bi";
-import { FaFacebook } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
 import { IoClose } from "react-icons/io5";
+import { Link } from "react-router-dom";
 export const Login = () => {
   return (
     <div className="w-screen h-screen flex items-center justify-center bg-zinc-600">
       <div className="flex relative flex-col px-24 py-8 gap-2 rounded-[50px] bg-zinc-100">
         <div className="absolute w-10 h-10 right-2 top-5 hover:bg-zinc-200 transition  flex items-center justify-center rounded-full">
-          <IoClose className="text-3xl cursor-pointer" />
+          <Link to="/">
+            <IoClose className="text-3xl cursor-pointer" />
+          </Link>
         </div>
 
         <div className="flex flex-col items-center justify-center gap-4">
@@ -54,10 +55,16 @@ export const Login = () => {
           <p className="font-semibold text-black text-center">OR</p>
         </form>
 
-
         <div className="text-sm text-center flex flex-col gap-3 ">
           <p className="font-semibold text-zinc-700">
-            Don't have an account?<a href="" className="text-blue-500 font-semibold text-lg"> Sign up</a>
+            Don't have an account?
+            <Link
+              to="/register"
+              className="text-blue-500 font-semibold text-lg"
+            >
+              {" "}
+              Sign up
+            </Link>
           </p>
         </div>
       </div>
