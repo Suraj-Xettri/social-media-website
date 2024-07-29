@@ -3,7 +3,7 @@ import { GiWorld } from "react-icons/gi";
 
 const Create = () => {
   return (
-    <div className="w-[80vw] mx-auto p-2">
+    <div className="">
       <div className="flex flex-col items-center border-b border-zinc-400 justify-center p-5 w-full">
         <div className="flex p-2 gap-2 w-full justify-center items-center">
           <img src="/default.png" alt="" className="w-10 h-10 rounded-full" />

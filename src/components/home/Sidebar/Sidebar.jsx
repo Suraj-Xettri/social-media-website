@@ -1,9 +1,9 @@
 import React from 'react';
-import { FaHome, FaSearch, FaBell, FaEnvelope, FaPen, FaBookmark, FaUsers, FaCrown, FaUser, FaEllipsisH } from 'react-icons/fa';
+import { FaHome, FaSearch, FaBell, FaEnvelope, FaPen, FaBookmark, FaUsers, FaUser, FaEllipsisH } from 'react-icons/fa';
 
 const Sidebar = () => {
   return (
-    <div className="absolute bg-black text-white flex flex-col">
+    <div className="bg-black text-white flex flex-col">
       <div className="">
         <div className="p-4">
           <div className="flex items-center space-x-4">
