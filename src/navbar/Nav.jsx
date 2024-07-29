@@ -11,7 +11,7 @@ const Nav = () => {
           <input
             type="text"
             placeholder="Search here.."
-            className="px-4 py-2 hidden sm:flex md:py-[10px] text-sm w-[20vw] border-zinc-400 focus:outline-none focus:border-[3px] focus:border-blue-200"
+            className="px-4 py-2 hidden sm:flex md:py-[10px] text-sm lg:w-[20vw] border-zinc-400 focus:outline-none focus:border-[3px] focus:border-blue-200"
           />
           <BsSearch className="absolute hidden sm:flex text-red-500  text-2xl right-1 cursor-pointer"/>
         </div>
