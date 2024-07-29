@@ -6,7 +6,7 @@ import { BrowserRouter as Router , Routes, Route } from "react-router-dom"
 
 function App() {
   return (
-   <div className="relative">
+   <div className="relative bg-black h-full w-full">
     
     <Router>
     <Nav/>
