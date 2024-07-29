@@ -4,7 +4,7 @@ import { BsSearch } from "react-icons/bs";
 import { Link } from "react-router-dom";
 const Nav = () => {
   return (
-    <div className="w-screen h-16 flex justify-between items-center sm:px-4 lg:px-10 absolute backdrop-blur bg-black bg-opacity-50">
+    <div className="w-screen h-16 flex justify-between items-center sm:px-4 lg:px-10 absolute backdrop-blur bg-zinc-700 bg-opacity-50">
       <div className="text-white text-2xl p-2 lg:text-4xl flex gap-6 justify-center items-center">
         <p> <Link to={'/'}>AnimePlex</Link> </p>
         <div className="flex items-center relative">

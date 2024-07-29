@@ -5,10 +5,11 @@ import Sidebar from '../home/Sidebar/Sidebar'
 
 const Post = () => {
   return (
-    <div className='h-screen w-screen justify-center items-center pt-20'>
-      <div className="flex w-[90vw]">
-        <Events className="flex-1"/>
-        <Create className="Flex-[2]" />
+    <div className='h-screen w-screen flex justify-center items-center pt-20'>
+      <div className="flex w-[90vw] h-[85vh] p-2">
+        
+        <Create  />
+        <Events/>
       </div>
     </div>
   )
