@@ -7,7 +7,7 @@ const Post = () => {
     <div className='h-screen w-screen flex justify-center items-center pt-[50px]'>
       <div className="flex w-[90vw] h-[85vh]">
         
-        <Create  />
+        <Create/>
         <Events/>
       </div>
     </div>
