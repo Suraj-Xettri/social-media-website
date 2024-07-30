@@ -5,8 +5,7 @@ import Create from '../home/Create/Create'
 const Post = () => {
   return (
     <div className='h-screen w-screen flex justify-center items-center pt-[50px]'>
-      <div className="flex w-[90vw] h-[85vh]">
-        
+      <div className="flex lg:w-[60vw] h-[85vh] md:w-[70vw] sm:w-[80vw] w-[95vw] ">
         <Create/>
         <Events/>
       </div>
