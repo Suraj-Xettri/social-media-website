@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="relative bg-black">
+    <div className="relative bg-blue-950">
       <Router>
         <Nav />
         <Routes>
