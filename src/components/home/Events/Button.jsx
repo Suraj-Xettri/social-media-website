@@ -17,13 +17,12 @@ const Button = () => {
       </div>
 
       <h1 className="text-white text-2xl tracking-tighter font-semibold">
-        Trending titles For You
+        Your Friends.
       </h1>
 
       <div className="flex flex-col gap-6">
         <div className="flex justify-between text-zinc-400">
           <div className="flex flex-col gap-[-10]">
-            <p className="text-xs font-medium">Fantasy-Adventure</p>
             <h4 className="text-sm tracking-tighter text-zinc-200 font-semibold">
               One Piece
             </h4>
@@ -35,7 +34,6 @@ const Button = () => {
 
         <div className="flex justify-between text-zinc-400">
           <div className="flex flex-col gap-[-10]">
-            <p className="text-xs font-medium">Fantasy-Adventure</p>
             <h4 className="text-sm tracking-tighter text-zinc-200 font-semibold">
               One Piece
             </h4>
@@ -47,7 +45,6 @@ const Button = () => {
 
         <div className="flex justify-between text-zinc-400">
           <div className="flex flex-col gap-[-10]">
-            <p className="text-xs font-medium">Fantasy-Adventure</p>
             <h4 className="text-sm tracking-tighter text-zinc-200 font-semibold">
               One Piece
             </h4>
@@ -59,7 +56,6 @@ const Button = () => {
 
         <div className="flex justify-between text-zinc-400">
           <div className="flex flex-col gap-[-10]">
-            <p className="text-xs font-medium">Fantasy-Adventure</p>
             <h4 className="text-sm tracking-tighter text-zinc-200 font-semibold">
               One Piece
             </h4>
@@ -71,7 +67,6 @@ const Button = () => {
 
         <div className="flex justify-between text-zinc-400">
           <div className="flex flex-col gap-[-10]">
-            <p className="text-xs font-medium">Fantasy-Adventure</p>
             <h4 className="text-sm tracking-tighter text-zinc-200 font-semibold">
               One Piece
             </h4>
