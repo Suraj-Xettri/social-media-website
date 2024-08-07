@@ -10,7 +10,7 @@ import {
   import { BsCardImage } from "react-icons/bs";
 const CreatePost = () => {
   return (
-    <div className="flex flex-col border-b border-zinc-400 justify-center p-5 mt-14 w-full">
+    <div className="flex flex-col border-b border-zinc-400 justify-center p-5 w-full">
       <div className="flex gap-2 w-full">
         <img src="/default.png" alt="" className="w-10 h-10 rounded-full" />
         <div className="w-full">
