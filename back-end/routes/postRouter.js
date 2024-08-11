@@ -6,4 +6,7 @@ postRouter.get("/", (req, res) => {
   res.send("I am from post");
 });
 
+
+
+
 export default postRouter;
