@@ -1,13 +1,7 @@
 import express from "express";
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-
-import cookieParser from "cookie-parser";
-
-const app = express()
-
-app.use(cookieParser())
+import generateToken from "../utils/generateToken.js";
 
 const userRouter = express.Router();
 
@@ -21,16 +15,19 @@ userRouter.post("/register", async (req, res) => {
     }
 
     bcrypt.hash(password, 10, async (err, hash) => {
+      
+      if (err) return res.send("error in hash")
+      
       const user = await User.create({
         username,
         email,
-        
         password: hash,
       });
       res.send(user);
+      let token = generateToken(user);
+      res.cookie("token", token);
     });
 
-    const token = jwt.sign(email, "secret");
   } catch (error) {
     console.error("Error occurred during registration:", error.message);
     res.status(500).send("Server error");
@@ -45,8 +42,9 @@ userRouter.post("/login", async (req, res) => {
     if (existingUser) {
       bcrypt.compare(password, existingUser.password, (err, result) => {
         if (result) {
-          res.send("Successfully Logged in");
-          const token = jwt.sign(email, "secret");
+          let token = generateToken(existingUser);
+          res.cookie("token", token);
+          res.send("Success fully logged in");
         } else {
           res.send("incorrect Username or password");
         }
