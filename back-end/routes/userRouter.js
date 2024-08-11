@@ -1,6 +1,7 @@
 import express from "express";
 
 import User from "../models/User.js";
+import bcrypt from "bcrypt";
 
 const userRouter = express.Router();
 
@@ -13,12 +14,14 @@ userRouter.post("/register", async (req, res) => {
       return res.status(400).send("User already exists with this email.");
     }
 
-    const user = await User.create({
-      username,
-      email,
-      password,
+    bcrypt.hash(password, 10, async (err, hash) => {
+      const user = await User.create({
+        username,
+        email,
+        password: hash,
+      });
+      res.send(user);
     });
-    res.send("Successfully created User");
   } catch (error) {
     console.error("Error occurred during registration:", error.message);
     res.status(500).send("Server error");
@@ -27,17 +30,19 @@ userRouter.post("/register", async (req, res) => {
 
 userRouter.post("/login", async (req, res) => {
   try {
-    const {email, password } = req.body;
+    const { email, password } = req.body;
 
     let existingUser = await User.findOne({ email });
     if (existingUser) {
-      if(existingUser.password === password){
-        res.send("You Logged in" + existingUser.username)
-      }else{
-        res.send("wrong babyy")
-      }
-    }else{
-      res.send("No user of this email")
+      bcrypt.compare(password, existingUser.password, (err,result) => {
+        if(result){
+          res.send("Successfully Logged in")
+        }else {
+          res.send("incorrect Username or password");
+        }
+      })
+    } else {
+      res.send("incorrect Username or password");
     }
   } catch (error) {
     console.error("Error occurred during registration:", error.message);
