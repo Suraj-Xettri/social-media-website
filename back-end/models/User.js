@@ -24,10 +24,6 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  post: [{
-    type: Schema.Types.ObjectId,
-    ref: "Post",
-  }],
 });
 const User = mongoose.model("User", UserSchema);
 export default User;
