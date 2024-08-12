@@ -10,6 +10,7 @@ import userRouter from "./routes/userRouter.js";
 import CommentRouter from "./routes/commentRouter.js";
 import postRouter from "./routes/postRouter.js";
 import dotenv from "dotenv";
+import { isLoggedIn } from "./config/isLoggedIn.js";
 
 import cookieParser from "cookie-parser";
 dotenv.config();
@@ -19,9 +20,10 @@ app.use(urlencoded({extended: true}))
 app.use(cookieParser())
 
 
+
 app.use("/users", userRouter)
-app.use("/posts", postRouter)
-app.use("/comments", CommentRouter)
+app.use("/posts", isLoggedIn, postRouter)
+app.use("/comments",isLoggedIn, CommentRouter)
 
 
 

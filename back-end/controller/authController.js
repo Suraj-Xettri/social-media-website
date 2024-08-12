@@ -33,7 +33,9 @@ const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     let existingUser = await User.findOne({ email });
+
     if (!existingUser) return res.send("incorrect Username or password");
+
     bcrypt.compare(password, existingUser.password, (err, result) => {
       if (!result) return res.send("incorrect Username or password");
 
@@ -47,9 +49,15 @@ const login = async (req, res) => {
   }
 };
 
+const logout = async (req, res) => {
+  res.cookie("token", "");
+  res.send("Logged out succesfully");
+};
+
 const auth = {
   registerUser,
   login,
+  logout,
 };
 
 export default auth;
