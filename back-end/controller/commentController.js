@@ -33,4 +33,4 @@ const comment = async (req, res) => {
 };
 
 
-   export default comment
+export default comment

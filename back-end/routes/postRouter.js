@@ -13,4 +13,7 @@ postRouter.post("/like/:id", isLoggedIn, postControl.like );
 
 postRouter.post("/dislike/:id", isLoggedIn, postControl.dislike);
 
+postRouter.get("/comment/:id", isLoggedIn, postControl.comments);
+
+
 export default postRouter;
