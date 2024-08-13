@@ -55,12 +55,34 @@ const comments = async (req, res) => {
   res.send(comments);
 };
 
+const posts = async (req, res) => {
+  try {
+    let posts;
+
+    if (req.user) {
+      // If the user is logged in, exclude posts by the logged-in user
+      posts = await Post.find({ author: { $ne: req.user._id } });
+    } else {
+      // If the user is not logged in, show all posts
+      posts = await Post.find();
+    }
+
+    res.status(200).json(posts);
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+
+
 
 const postControl = {
   like,
   dislike,
   createPost,
   comments,
+  posts
 };
 
 

@@ -22,7 +22,7 @@ app.use(cookieParser())
 
 
 app.use("/users", userRouter)
-app.use("/posts", isLoggedIn, postRouter)
+app.use("/posts", postRouter)
 app.use("/comment",isLoggedIn, CommentRouter)
 
 
