@@ -7,6 +7,6 @@ CommentRouter.get("/", (req, res) => {
   res.send("I am from comment");
 });
 
-CommentRouter.post("/:postID", isLoggedIn,comment);
+CommentRouter.post("/:postID", isLoggedIn, comment);
 
 export default CommentRouter;
