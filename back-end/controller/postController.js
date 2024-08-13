@@ -64,7 +64,11 @@ const posts = async (req, res) => {
       posts = await Post.find({ author: { $ne: req.user._id } });
     } else {
       // If the user is not logged in, show all posts
-      posts = await Post.find();
+      posts = await Post.find()
+      .populate("author" ,'username profilePicture')
+      .populate("comments", "content")
+
+      console.log(posts)
     }
 
     res.status(200).json(posts);
