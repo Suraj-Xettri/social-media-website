@@ -3,14 +3,14 @@ import { TfiMenu } from "react-icons/tfi";
 import { BsSearch } from "react-icons/bs";
 import { Link } from "react-router-dom";
 const Nav = () => {
-  const [isLogged, setIsLoggedin] = useState(true);
+  const [isLogged, setIsLoggedin] = useState(false);
 
   return (
     <div className="w-screen h-16 flex justify-between items-center sm:px-4 lg:px-10 absolute backdrop-blur bg-zinc-700 bg-opacity-0">
       <div className="text-white text-2xl p-2 lg:text-4xl flex gap-6 justify-center items-center">
         <p>
-          {" "}
-          <Link to={"/"}>AnimePlex</Link>{" "}
+         
+          <Link to={"/home"}>AnimePlex</Link>
         </p>
 
         <div className="flex items-center bg-white rounded-xl relative">

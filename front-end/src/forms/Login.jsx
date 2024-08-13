@@ -7,7 +7,7 @@ export const Login = () => {
     <div className="w-screen h-screen flex items-center justify-center bg-zinc-600">
       <div className="flex relative flex-col px-24 py-8 gap-2 rounded-[50px] bg-zinc-100">
         <div className="absolute w-10 h-10 right-2 top-5 hover:bg-zinc-200 transition  flex items-center justify-center rounded-full">
-          <Link to="/">
+          <Link to="/home">
             <IoClose className="text-3xl cursor-pointer" />
           </Link>
         </div>
