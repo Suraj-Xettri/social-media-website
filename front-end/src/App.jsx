@@ -4,6 +4,7 @@ import Home from "./components/home/Home";
 import Nav from "./navbar/Nav";
 import Post from "./components/posts/Post";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Notification from "./components/notification/Notification";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/home" element={<Post />} />
         </Routes>
+        <Notification/>
       </Router>
     </div>
   );

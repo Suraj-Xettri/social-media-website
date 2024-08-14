@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { BiBot } from "react-icons/bi";
 import { IoClose } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import axios from "axios"
 export const Register = () => {
   const [data, setdata] = useState({});
-
+  const navigate = useNavigate()
   const handleInput = (e) => {
     let name = e.target.name;
     let value = e.target.value;
@@ -20,9 +21,15 @@ export const Register = () => {
     
     try {
       const response = await axios.post("http://localhost:3000/users/register", data);
-      console.log("Registration successful:", response.data);
+      if (response.data.registered){
+        navigate("/home")
+        toast.success("Sucessfully Registered")
+      }else{
+        toast.error("Please provide valid information")
+        navigate("/register")
+      }
     } catch (error) {
-      console.error("There was an error registering!", error);
+      toast(error.message)
     }
   };
 

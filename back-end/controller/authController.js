@@ -12,7 +12,7 @@ const registerUser = async (req, res) => {
     }
 
     bcrypt.hash(password, 10, async (err, hash) => {
-      if (err) return res.send("error in hash", err.message);
+      if (err) return res.send({registered:false});
 
       const user = await User.create({
         username,
@@ -21,13 +21,15 @@ const registerUser = async (req, res) => {
       });
       let token = generateToken(user);
       res.cookie("token", token);
-      res.send("Succesfully registered");
+      res.send({registered:true});
     });
   } catch (error) {
-    console.error("Error occurred during registration:", error.message);
-    res.status(500).send("Server error");
+    res.send({registered:false});
   }
 };
+
+
+
 
 const login = async (req, res) => {
   try {
@@ -37,11 +39,11 @@ const login = async (req, res) => {
     if (!existingUser) return res.send("incorrect Username or password");
 
     bcrypt.compare(password, existingUser.password, (err, result) => {
-      if (!result) return res.send("incorrect Username or password");
+      if (!result) return res.send({message:false});
 
       let token = generateToken(existingUser);
       res.cookie("token", token);
-      res.send("Success fully logged in");
+      res.send({message:true});
     });
   } catch (error) {
     console.error("Error occurred during registration:", error.message);

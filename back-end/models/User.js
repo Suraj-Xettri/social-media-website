@@ -5,7 +5,6 @@ const UserSchema = new Schema({
   username: {
     type: String,
     required: true,
-    unique: true,
   },
   email: {
     type: String,
@@ -28,6 +27,9 @@ const UserSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Post",
   }],
+
+
+  
 
 });
 const User = mongoose.model("User", UserSchema);

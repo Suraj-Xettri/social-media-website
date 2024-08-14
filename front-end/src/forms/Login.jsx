@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { BiBot } from "react-icons/bi";
 import { IoClose } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import { toast } from "react-toastify";
 import axios from "axios";
 export const Login = () => {
   const [data, setdata] = useState({});
+
+  const navigate = useNavigate()
 
   const handleInput = (e) => {
     let name = e.target.name;
@@ -24,7 +28,13 @@ export const Login = () => {
         "http://localhost:3000/users/login",
         data
       );
-      console.log("Login successful:", response.data);
+      if (response.data.message){
+        navigate("/home")
+        toast.success("Sucessfully Logged in")
+      }else{
+        toast.error("Incorrect Username or Password")
+        navigate("/login")
+      }
     } catch (error) {
       console.error("There was an error login!", error);
     }
