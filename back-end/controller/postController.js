@@ -12,14 +12,15 @@ const createPost = async (req, res) => {
     });
     user.post.push(post._id);
     user.save();
-    res.send(post);
+    res.send({success:true, message:"Post created Sucessfully"});
   } catch (error) {
-    res.send(error);
+    res.send({success:false, message:error.message});
   }
 };
 
 const like = async (req, res) => {
   try {
+    
     const user = await User.findOne({ email: req.user.email });
 
     const post = await Post.findOne({ _id: req.params.id });

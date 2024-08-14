@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { BiBot } from "react-icons/bi";
 import { IoClose } from "react-icons/io5";
 import { Link, Navigate } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 
 export const Login = () => {
   const [data, setdata] = useState({});
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleInput = (e) => {
     let name = e.target.name;
@@ -27,19 +27,25 @@ export const Login = () => {
     try {
       const response = await axios.post(
         "http://localhost:3000/users/login",
-        data
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
       );
-      if (response.data.success){
-        navigate("/home")
-        toast.success(response.data.message)
-        console.log(response)
-      }else{
-        toast.error(response.data.message)
-        navigate("/login")
-        console.log(response)
+      if (response.data.success) {
+        navigate("/home");
+        toast.success(response.data.message);
+        console.log(response);
+      } else {
+        toast.error(response.data.message);
+        navigate("/login");
+        console.log(response);
       }
     } catch (error) {
-      toast.success(response.data.message)
+      toast.success(error);
     }
   };
   return (
@@ -104,13 +110,10 @@ export const Login = () => {
               to="/register"
               className="text-blue-500 font-semibold text-lg"
             >
-            
               Sign up
             </Link>
           </p>
         </div>
-
-       
       </div>
     </div>
   );
