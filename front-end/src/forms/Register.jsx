@@ -21,15 +21,14 @@ export const Register = () => {
     
     try {
       const response = await axios.post("http://localhost:3000/users/register", data);
-      if (response.data.registered){
+      if (response.data.success){
         navigate("/home")
-        toast.success("Sucessfully Registered")
-      }else{
+        toast.success(response.data.message)
         toast.error("Please provide valid information")
         navigate("/register")
       }
     } catch (error) {
-      toast(error.message)
+      toast.success(response.data.message)
     }
   };
 

@@ -29,17 +29,17 @@ export const Login = () => {
         "http://localhost:3000/users/login",
         data
       );
-      if (response.data.message){
+      if (response.data.success){
         navigate("/home")
-        toast.success("Sucessfully Logged in")
+        toast.success(response.data.message)
         console.log(response)
       }else{
-        toast.error("Incorrect Username or Password")
+        toast.error(response.data.message)
         navigate("/login")
         console.log(response)
       }
     } catch (error) {
-      console.error("There was an error login!", error);
+      toast.success(response.data.message)
     }
   };
   return (
@@ -104,11 +104,13 @@ export const Login = () => {
               to="/register"
               className="text-blue-500 font-semibold text-lg"
             >
-              {" "}
+            
               Sign up
             </Link>
           </p>
         </div>
+
+       
       </div>
     </div>
   );
