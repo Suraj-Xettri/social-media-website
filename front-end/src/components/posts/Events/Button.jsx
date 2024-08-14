@@ -17,7 +17,7 @@ const Button = () => {
       </div>
 
       <h1 className="text-white text-2xl tracking-tighter font-semibold">
-        Your Friends.
+        Top content creators.
       </h1>
 
       <div className="flex flex-col gap-6">
@@ -29,7 +29,7 @@ const Button = () => {
             <p className="text-xs font-medium">2.3M posts</p>
           </div>
 
-          <TfiLayoutMenuSeparated />
+          <TfiLayoutMenuSeparated clas />
         </div>
 
         <div className="flex justify-between text-zinc-400">
