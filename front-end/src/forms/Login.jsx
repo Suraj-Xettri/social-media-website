@@ -1,8 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { BiBot } from "react-icons/bi";
 import { IoClose } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import axios from "axios";
 export const Login = () => {
+  const [data, setdata] = useState({});
+
+  const handleInput = (e) => {
+    let name = e.target.name;
+    let value = e.target.value;
+
+    setdata((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/users/login",
+        data
+      );
+      console.log("Login successful:", response.data);
+    } catch (error) {
+      console.error("There was an error login!", error);
+    }
+  };
   return (
     <div className="w-screen h-screen flex items-center justify-center bg-zinc-600">
       <div className="flex relative flex-col px-24 py-8 gap-2 rounded-[50px] bg-zinc-100">
@@ -19,11 +45,13 @@ export const Login = () => {
           </h1>
         </div>
 
-        <form action="" className="mt-5 flex flex-col gap-2">
+        <form onSubmit={handleSubmit} className="mt-5 flex flex-col gap-2">
           <div className="flex flex-col gap-1">
             <label htmlFor="email">Email</label>
             <input
-              type="text"
+              onChange={handleInput}
+              name="email"
+              type="email"
               id="email"
               placeholder="Email"
               className="py-2 px-3 border-[2px] border-zinc-400 rounded-xl focus:outline-none focus:border-[3px] focus:border-blue-200"
@@ -33,8 +61,10 @@ export const Login = () => {
           <div className="flex flex-col gap-1">
             <label htmlFor="password">Password</label>
             <input
+              onChange={handleInput}
               type="password"
               id="password"
+              name="password"
               placeholder="Password"
               className="py-2 px-3 border-[2px] border-zinc-400 rounded-xl focus:outline-none focus:border-[3px] focus:border-blue-200"
             />
@@ -48,7 +78,6 @@ export const Login = () => {
             type="submit"
             className="bg-red-600 py-3 text-white font-bold rounded-xl"
           >
-            {" "}
             Log in
           </button>
 
