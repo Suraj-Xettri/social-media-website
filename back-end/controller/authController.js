@@ -13,7 +13,6 @@ const registerUser = async (req, res) => {
 
     bcrypt.hash(password, 10, async (err, hash) => {
       if (err) return res.send({registered:false});
-
       const user = await User.create({
         username,
         email,

@@ -5,6 +5,7 @@ import { Link, Navigate } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
 import axios from "axios";
+
 export const Login = () => {
   const [data, setdata] = useState({});
 
@@ -31,9 +32,11 @@ export const Login = () => {
       if (response.data.message){
         navigate("/home")
         toast.success("Sucessfully Logged in")
+        console.log(response)
       }else{
         toast.error("Incorrect Username or Password")
         navigate("/login")
+        console.log(response)
       }
     } catch (error) {
       console.error("There was an error login!", error);

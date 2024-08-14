@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TfiMenu } from "react-icons/tfi";
 import { BsSearch } from "react-icons/bs";
 import { Link } from "react-router-dom";
 const Nav = () => {
   const [isLogged, setIsLoggedin] = useState(false);
 
+
+  const isLoggedIn = () =>{
+    setIsLoggedin((p) => !p)
+  }
   return (
     <div className="w-screen h-16 flex justify-between items-center sm:px-4 lg:px-10 absolute backdrop-blur bg-zinc-700 bg-opacity-0">
       <div className="text-white text-2xl p-2 lg:text-4xl flex gap-6 justify-center items-center">
@@ -25,7 +29,11 @@ const Nav = () => {
 
       <div className="text-white flex pr-2 gap-3 lg:gap-8 items-center">
         {isLogged ? (
-          <div></div>
+          <div>
+            <button className="bg-red-600 px-4 py-[5px] md:px-4 md:py-2 rounded-xl font-bold hover:bg-red-500 transition duration-300 ease-out">
+            <Link to={"/home"}>Logout</Link>
+          </button>
+          </div>
         ) : (
           <button className="bg-red-600 px-4 py-[5px] md:px-4 md:py-2 rounded-xl font-bold hover:bg-red-500 transition duration-300 ease-out">
             <Link to={"/login"}>login</Link>
