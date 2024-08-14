@@ -4,11 +4,12 @@ import { BsSearch } from "react-icons/bs";
 import { Link } from "react-router-dom";
 const Nav = () => {
   const [isLogged, setIsLoggedin] = useState(false);
-
-
+  
   const isLoggedIn = () =>{
     setIsLoggedin((p) => !p)
   }
+
+  
   return (
     <div className="w-screen h-16 flex justify-between items-center sm:px-4 lg:px-10 absolute backdrop-blur bg-zinc-700 bg-opacity-0">
       <div className="text-white text-2xl p-2 lg:text-4xl flex gap-6 justify-center items-center">
