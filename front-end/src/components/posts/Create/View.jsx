@@ -19,6 +19,11 @@ const View = () => {
     getProducts();
   }, []);
 
+  async function like(post_id){
+    const posts = await axios.post(`http://localhost:3000/posts/like/${post_id}`);
+    console.log(posts)
+  }
+
   return (
     <div className="">
       {posts.map((post) => (
@@ -48,7 +53,7 @@ const View = () => {
 
             <div className="text-zinc-300 p-3 w-[300px] flex gap-4 text-xl">
               <div className="flex cursor-pointer items-center justify-center gap-1">
-                <FaRegThumbsUp />
+                <FaRegThumbsUp onClick={()=>{like(post._id)}}/>
                 <p className="text-sm">{post.likes.length}</p>
               </div>
 

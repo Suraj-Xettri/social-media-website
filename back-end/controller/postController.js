@@ -25,13 +25,14 @@ const like = async (req, res) => {
 
     const post = await Post.findOne({ _id: req.params.id });
 
-    if (post.likes.includes(user._id)) return res.send("You cannot like twice");
+    if (post.likes.includes(user._id)) return res.send({message: 'You cannot like twice'});
 
     post.likes.push(user._id);
     post.save();
     res.send(post);
+
   } catch (error) {
-    res.send(error);
+    res.send({message:error.message});
   }
 };
 
