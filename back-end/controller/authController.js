@@ -98,9 +98,15 @@ const login = async (req, res) => {
 };
 
 const logout = async (req, res) => {
-  res
+
+  try {
+    res
     .cookie("token", "", { maxAge: 0 })
-    .json({ success: true, message: "Log Out Succesfully" });
+    .send({ success: true, message: "Log Out Succesfully" });
+  } catch (error) {
+    res.send({success:false , message:error.message})
+  }
+  
 };
 
 const auth = {
