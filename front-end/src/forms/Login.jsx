@@ -5,11 +5,15 @@ import { Link, Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setAuthUser } from "../redux/authSlice";
 
 export const Login = () => {
   const [data, setdata] = useState({});
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
 
   const handleInput = (e) => {
     let name = e.target.name;
@@ -36,6 +40,7 @@ export const Login = () => {
         }
       );
       if (response.data.success) {
+        dispatch(setAuthUser(response.data.activeUser))
         navigate("/home");
         toast.success(response.data.message);
         console.log(response);

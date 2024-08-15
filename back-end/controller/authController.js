@@ -73,7 +73,7 @@ const login = async (req, res) => {
 
       let token = generateToken(existingUser);
 
-      const user = {
+      const activeUser = {
         _id: existingUser._id,
         username: existingUser.username,
         email: existingUser.email,
@@ -89,7 +89,7 @@ const login = async (req, res) => {
         .json({
           success: true,
           message: `welcome ${existingUser.username}`,
-          user,
+          activeUser,
         });
     });
   } catch (error) {

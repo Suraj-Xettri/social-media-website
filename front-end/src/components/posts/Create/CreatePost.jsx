@@ -1,15 +1,19 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 const CreatePost = () => {
   const [content, setContent] = useState("");
 
+  const {user} = useSelector(store => store.auth)
   const handleContent = (e) => {
     setContent((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
   };
+
+  console.log(user)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,7 +43,7 @@ const CreatePost = () => {
   return (
     <div className="flex border-b border-zinc-400 p-5 w-full">
       <div className="flex gap-3 items-end w-full">
-        <img src="/default.png" alt="" className="w-12 h-12 rounded-full" />
+        <img src={user.profilePic || "/default.png"} alt="" className="w-12 h-12 rounded-full" />
         <form
           onSubmit={handleSubmit}
           className="w-full flex justify-between flex-1"
@@ -48,7 +52,7 @@ const CreatePost = () => {
             onChange={handleContent}
             type="text"
             name="content"
-            placeholder="What is happening?!"
+            placeholder={`What is happenoing ${user.username}?`}
             className="flex-1 border-none outline-none text-zinc-300 bg-transparent text-lg"
           />
           <button

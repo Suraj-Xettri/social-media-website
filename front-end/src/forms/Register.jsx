@@ -3,32 +3,42 @@ import { BiBot } from "react-icons/bi";
 import { IoClose } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import axios from "axios"
+import axios from "axios";
+import { setAuthUser } from "../redux/authSlice";
+import { useDispatch } from "react-redux";
 export const Register = () => {
   const [data, setdata] = useState({});
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleInput = (e) => {
     let name = e.target.name;
     let value = e.target.value;
 
-    setdata((prevData) => ({ 
+    setdata((prevData) => ({
       ...prevData,
-      [name]: value }));
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
-      const response = await axios.post("http://localhost:3000/users/register", data);
-      if (response.data.success){
-        navigate("/home")
-        toast.success(response.data.message)
-        toast.error("Please provide valid information")
-        navigate("/register")
+      const response = await axios.post(
+        "http://localhost:3000/users/register",
+        data
+      );
+      if (response.data.success) {
+        dispatch(setAuthUser(response.data.activeUser));
+
+        navigate("/home");
+        toast.success(response.data.message);
+      } else {
+        toast.error("Please provide valid information");
+        navigate("/register");
       }
     } catch (error) {
-      toast.success(response.data.message)
+      toast.success(response.data.message);
     }
   };
 
