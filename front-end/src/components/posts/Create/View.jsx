@@ -3,6 +3,7 @@ import { TfiLayoutMenuSeparated } from "react-icons/tfi";
 import { FaRegComment, FaRegThumbsUp } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import axios from "axios";
+import { toast } from "react-toastify";
 const View = () => {
   const [comment, setComment] = useState(false);
   const [posts, setPosts] = useState([]);
@@ -17,12 +18,31 @@ const View = () => {
 
   useEffect(() => {
     getProducts();
-  }, []);
+  });
 
-  async function like(post_id){
-    const posts = await axios.post(`http://localhost:3000/posts/like/${post_id}`);
-    console.log(posts)
-  }
+  const like = async (post_id) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:3000/posts/like/${post_id}`,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true, 
+        }
+      );
+  
+      if (response.data.success) {
+        toast.success("Success");
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+  
 
   return (
     <div className="">
@@ -35,10 +55,7 @@ const View = () => {
           />
           <div className="w-[70vw]  sm:w-[50vw] flex flex-col">
             <div className="flex justify-between items-center w-full">
-              <p className="text-white">
-                {post.author.username}
-                <span className="ml-1 text-zinc-500">@Username</span>
-              </p>
+              <p className="text-white">{post.author.username}</p>
               <TfiLayoutMenuSeparated className="text-zinc-400 text-xl" />
             </div>
             <p className="w-full text-zinc-100">{post.content}</p>
@@ -52,8 +69,13 @@ const View = () => {
             )}
 
             <div className="text-zinc-300 p-3 w-[300px] flex gap-4 text-xl">
-              <div className="flex cursor-pointer items-center justify-center gap-1">
-                <FaRegThumbsUp onClick={()=>{like(post._id)}}/>
+              <div
+                className="flex cursor-pointer items-center justify-center gap-1"
+              >
+                <button onClick={() => like(post._id)}>
+                  <FaRegThumbsUp />
+                </button>
+
                 <p className="text-sm">{post.likes.length}</p>
               </div>
 
@@ -75,18 +97,23 @@ const View = () => {
                   className="absolute text-xl right-0 cursor-pointer top-0"
                 />
 
-                {post.comments ? post.comments.map((comment) => (
-                  <div key={comment._id} className="flex gap-2 items-center">
-                    <img
-                      src={post.author.profilePicture || "/default.png"}
-                      alt=""
-                      className="w-6 h-6 rounded-full"
-                    />
-                    <p className="text-sm w-[200px] flex items-end p-2 rounded-xl bg-zinc-100">
-                      {comment.content}
-                    </p>
-                  </div>
-                )) : ""}
+                {post.comments
+                  ? post.comments.map((comment) => (
+                      <div
+                        key={comment._id}
+                        className="flex gap-2 items-center"
+                      >
+                        <img
+                          src={post.author.profilePicture || "/default.png"}
+                          alt=""
+                          className="w-6 h-6 rounded-full"
+                        />
+                        <p className="text-sm w-[200px] flex items-end p-2 rounded-xl bg-zinc-100">
+                          {comment.content}
+                        </p>
+                      </div>
+                    ))
+                  : ""}
               </div>
             </div>
           ) : (

@@ -18,23 +18,27 @@ const createPost = async (req, res) => {
   }
 };
 
+
 const like = async (req, res) => {
   try {
     
     const user = await User.findOne({ email: req.user.email });
 
+    if(!user) return ( {message:'You need to log in first',success:false })
+
     const post = await Post.findOne({ _id: req.params.id });
 
-    if (post.likes.includes(user._id)) return res.send({message: 'You cannot like twice'});
+    if (post.likes.includes(user._id)) return res.send({message: 'You cannot like twice',success:false});
 
     post.likes.push(user._id);
-    post.save();
-    res.send(post);
-
+    await post.save();
+    res.send({message:"liked sucessfully", success:true});
   } catch (error) {
-    res.send({message:error.message});
+    res.send({message:error.message, success:false});
   }
 };
+
+
 
 const dislike = async (req, res) => {
   try {
@@ -70,7 +74,6 @@ const posts = async (req, res) => {
       .populate("author" ,'username profilePicture')
       .populate("comments", "content")
 
-      console.log(posts)
     }
 
     res.status(200).json(posts);
