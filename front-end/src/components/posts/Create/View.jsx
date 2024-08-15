@@ -45,7 +45,7 @@ const View = () => {
   
 
   return (
-    <div className="">
+    <div className="p-3">
       {posts.map((post) => (
         <div key={post._id} className="flex gap-2 w-full p-2 relative border-b">
           <img
@@ -55,10 +55,9 @@ const View = () => {
           />
           <div className="w-[70vw]  sm:w-[50vw] flex flex-col">
             <div className="flex justify-between items-center w-full">
-              <p className="text-white">{post.author.username}</p>
-              <TfiLayoutMenuSeparated className="text-zinc-400 text-xl" />
+              <p className="text-zinc-900 font-medium">{post.author.username}</p>
             </div>
-            <p className="w-full text-zinc-100">{post.content}</p>
+            <p className="w-full text-zinc-600">{post.content}</p>
 
             {post.author.profilePicture ? (
               <div className="min-w-[200px] mt-2 max-w-[500px] min-h-[200px] h-[300px] max-[350px] rounded-3xl bg-gray-500">
@@ -68,7 +67,7 @@ const View = () => {
               ""
             )}
 
-            <div className="text-zinc-300 p-3 w-[300px] flex gap-4 text-xl">
+            <div className="text-zinc-500 p-3 w-[300px] flex gap-4 text-xl">
               <div
                 className="flex cursor-pointer items-center justify-center gap-1"
               >
@@ -78,7 +77,6 @@ const View = () => {
 
                 <p className="text-sm">{post.likes.length}</p>
               </div>
-
               <div
                 onClick={handleComment}
                 className="flex cursor-pointer items-center justify-center gap-1"
@@ -89,7 +87,7 @@ const View = () => {
             </div>
           </div>
 
-          {comment ? (
+          {comment && (
             <div className="absolute w-[250px] h-[320px] bottom-5 bg-white left-44">
               <div className="relative flex h-full flex-col scrol overflow-y-scroll p-2 py-10">
                 <IoMdClose
@@ -113,11 +111,9 @@ const View = () => {
                         </p>
                       </div>
                     ))
-                  : ""}
+                  :""}
               </div>
             </div>
-          ) : (
-            ""
           )}
         </div>
       ))}

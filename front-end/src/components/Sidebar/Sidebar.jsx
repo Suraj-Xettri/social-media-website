@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React from "react";
 import {
   FaHome,
   FaSearch,
@@ -7,17 +8,51 @@ import {
   FaBookmark,
   FaUser,
 } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { setAuthUser } from "../../redux/authSlice";
+const Sidebar = ({ handleCreate }) => {
+  const dispatch = useDispatch()
 
-const Sidebar = ({handleCreate}) => {
+  const logout = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/users/logout", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true, // This should be inside the configuration object
+      });
   
+  
+      if (response.data.success) {
+        dispatch(setAuthUser(response.data.activeUser)); // Assuming setAuthUser is an action
+        toast.success(response.data.message);
+        
+      } else {
+        toast.error(response.data.message);
+        
+      }
+    } catch (error) {
+      toast.error(error.message); // Always use error.message for better clarity
+    }
+  };
+
+
+  const { user } = useSelector((store) => store.auth);
   return (
-    <div className="fixed top-20 z-20 left-10 w-[17vw]">
+    <div className="fixed top-20 z-10 left-10 w-[17vw]">
       <div className="bg-zinc-200 pl-5 h-[85vh]  rounded-xl text-zinc-900 flex flex-col gap-10">
         <div className="flex flex-col gap-2 items-center pt-5">
-          <div className="h-10 w-10 bg-gray-500 rounded-full flex items-center justify-center">
-            <span>S</span>
+          <div className="h-10 w-10 rounded-full flex items-center justify-center">
+            <img
+              src={user?.profilePic || "/default.png"}
+              className="w-full h-full rounded-full"
+              alt=""
+            />
           </div>
-          <div className="font-semibold">Suraj Xettri</div>
+          <div className="font-semibold">
+            {user?.username || "Guest Account"}
+          </div>
         </div>
         <div className="space-y-10">
           <div className="flex cursor-pointer items-center space-x-4">
@@ -28,26 +63,50 @@ const Sidebar = ({handleCreate}) => {
             <FaSearch className="text-xl" />
             <span className="text-xl">Explore</span>
           </div>
-          <div className="flex cursor-pointer items-center space-x-4">
+          <div
+            className={`flex cursor-pointer items-center space-x-4 ${
+              !user ? "cursor-not-allowed opacity-50" : ""
+            }`}
+          >
             <FaBell className="text-xl" />
             <span className="text-xl">Notifications</span>
           </div>
-  
-          <div className="flex cursor-pointer items-center space-x-4">
+
+          <div
+            className={`flex cursor-pointer items-center space-x-4 ${
+              !user ? "cursor-not-allowed opacity-50" : ""
+            }`}
+          >
             <FaBookmark className="text-xl" />
             <span className="text-xl">Bookmarks</span>
           </div>
-          <div className="flex cursor-pointer items-center space-x-4">
+          <button
+            className={`flex cursor-pointer items-center space-x-4 ${
+              !user ? "cursor-not-allowed opacity-50" : ""
+            }`}
+          >
             <FaUser className="text-xl" />
             <span className="text-xl">Profile</span>
-          </div>
-          <button onClick={handleCreate} className="flex cursor-pointer items-center space-x-4">
+          </button>
+          <button
+            onClick={handleCreate}
+            className={`flex cursor-pointer items-center space-x-4 ${
+              !user ? "cursor-not-allowed opacity-50" : ""
+            }`}
+            disabled={!user} // Disable if user is not true
+          >
             <FaPen className="text-xl" />
             <span className="text-xl">Create Post</span>
           </button>
         </div>
         <div className="p-4">
-          <button className="w-full bg-blue-500 text-white py-2 rounded-lg">
+          <button
+          onClick={logout}
+            disabled={!user}
+            className={`w-full bg-blue-500 text-white py-2 rounded-lg ${
+              !user ? "cursor-not-allowed opacity-50" : ""
+            }`}
+          >
             Log out
           </button>
         </div>

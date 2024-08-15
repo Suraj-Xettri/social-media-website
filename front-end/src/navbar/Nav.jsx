@@ -52,24 +52,11 @@ const Nav = () => {
         </p>
       </div>
       <div className="text-black flex pr-2 gap-3 lg:gap-8 items-center">
-        {isLogged ? (
-          <div className="flex space-x-3">
-            <div className="w-10 h-10 rounded-full bg-blue-100">
-            </div>
-
-            <button
-              onClick={logout}
-              className="bg-red-600 px-5 text-xs rounded-xl font-semibold hover:bg-red-500 transition duration-300 ease-out"
-            >
-              <Link to={"/home"}>Logout</Link>
-            </button>
-          </div>
-        ) : (
+        {!isLogged && (
           <button className="bg-red-600 px-5 py-1 md:px-4 md:py-2 rounded-xl font-semibold hover:bg-red-500 transition duration-300 ease-out">
             <Link to={"/login"}>login</Link>
           </button>
         )}
-
         <TfiMenu className="text-3xl text-black md:text-4xl cursor-pointer" />
       </div>
     </div>

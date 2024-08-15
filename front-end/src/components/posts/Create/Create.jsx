@@ -9,7 +9,7 @@ const Create = () => {
 
   return (
     <div className="changes rounded-2xl flex-[2] bg-zinc-100 backdrop-blur overflow-y-scroll overflow-x-hidden relative">
-      {user?<CreatePost />:""}
+      {user && <CreatePost />}
       <View />
     </div>
   );
