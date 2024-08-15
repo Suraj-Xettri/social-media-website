@@ -45,27 +45,16 @@ const Nav = () => {
   
 
   return (
-    <div className="w-screen h-16 flex justify-between items-center sm:px-4 lg:px-10 absolute backdrop-blur bg-zinc-700 bg-opacity-0">
-      <div className="text-white text-2xl p-2 lg:text-4xl flex gap-6 justify-center items-center">
+    <div className="w-screen h-16 bg-zinc-300 flex justify-between items-center sm:px-4 lg:px-10 absolute backdrop-blur bg-opacity-70">
+      <div className="text-black text-2xl p-2 lg:text-4xl flex gap-6 justify-center items-center">
         <p>
           <Link to={"/home"}>AnimePlex</Link>
         </p>
-
-        <div className="flex items-center bg-white rounded-xl relative">
-          <input
-            type="text"
-            placeholder="Search here.."
-            className="px-4 rounded-xl py-2 w-full hidden sm:flex md:py-[10px] text-sm lg:w-[20vw] border-zinc-400 focus:outline-none focus:border-[3px] focus:border-blue-200"
-          />
-          <BsSearch className="absolute hidden sm:flex text-red-500  text-2xl right-1 cursor-pointer" />
-        </div>
       </div>
-
-      <div className="text-white flex pr-2 gap-3 lg:gap-8 items-center">
+      <div className="text-black flex pr-2 gap-3 lg:gap-8 items-center">
         {isLogged ? (
           <div className="flex space-x-3">
             <div className="w-10 h-10 rounded-full bg-blue-100">
-
             </div>
 
             <button
@@ -81,7 +70,7 @@ const Nav = () => {
           </button>
         )}
 
-        <TfiMenu className="text-3xl md:text-4xl cursor-pointer" />
+        <TfiMenu className="text-3xl text-black md:text-4xl cursor-pointer" />
       </div>
     </div>
   );
