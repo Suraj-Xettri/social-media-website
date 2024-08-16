@@ -77,12 +77,14 @@ const View = () => {
 
                 <p className="text-sm">{post.likes.length}</p>
               </div>
+
+
               <div
                 onClick={handleComment}
                 className="flex cursor-pointer items-center justify-center gap-1"
               >
                 <FaRegComment />
-                <p className="text-sm ">{post.comments.length}</p>
+                <p className="text-sm font-normal text-zinc-600 ">{post.comments.length}</p>
               </div>
             </div>
           </div>
@@ -104,7 +106,7 @@ const View = () => {
                         <img
                           src={post.author.profilePicture || "/default.png"}
                           alt=""
-                          className="w-6 h-6 rounded-full"
+                          className="w-8 h-8 rounded-full"
                         />
                         <p className="text-sm w-[200px] flex items-end p-2 rounded-xl bg-zinc-100">
                           {comment.content}
