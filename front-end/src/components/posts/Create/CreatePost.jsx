@@ -7,10 +7,7 @@ const CreatePost = () => {
 
   const {user} = useSelector(store => store.auth)
   const handleContent = (e) => {
-    setContent((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    setContent(e.target.value)
   };
 
   console.log(user)
@@ -21,7 +18,7 @@ const CreatePost = () => {
     try {
       const responce = await axios.post(
         "http://localhost:3000/posts/create",
-        content,
+        {content},
         {
           headers: {
             "Content-Type": "application/json",
@@ -32,6 +29,7 @@ const CreatePost = () => {
 
       if (responce.data.success) {
         toast.success(responce.data.message);
+        setContent("")
       } else {
         toast.error(responce.data.message);
       }
@@ -52,8 +50,9 @@ const CreatePost = () => {
             onChange={handleContent}
             type="text"
             name="content"
+            value={content}
             placeholder={`What is happenoing ${user.username}?`}
-            className="flex-1 border-none outline-none text-zinc-300 bg-transparent text-lg"
+            className="flex-1 border-none outline-none text-zinc-700 bg-transparent text-lg"
           />
           <button
             type="submit"
