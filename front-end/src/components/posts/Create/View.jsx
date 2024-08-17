@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { TfiLayoutMenuSeparated } from "react-icons/tfi";
 import { FaRegComment, FaRegThumbsUp } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 const View = () => {
   const [comment, setComment] = useState(false);
   const [posts, setPosts] = useState([]);
+  const { user } = useSelector((store) => store.auth);
+
   const handleComment = () => {
     setComment((p) => !p);
   };
@@ -26,13 +28,10 @@ const View = () => {
         `http://localhost:3000/posts/like/${post_id}`,
         {},
         {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true, 
+          withCredentials: true,
         }
       );
-  
+
       if (response.data.success) {
         toast.success("Success");
       } else {
@@ -42,7 +41,26 @@ const View = () => {
       toast.error(error.message);
     }
   };
-  
+
+  const disLike = async (post_id) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:3000/posts/dislike/${post_id}`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (response.data.success) {
+        toast.success("Success");
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   return (
     <div className="p-3">
@@ -55,7 +73,9 @@ const View = () => {
           />
           <div className="w-[70vw]  sm:w-[50vw] flex flex-col">
             <div className="flex justify-between items-center w-full">
-              <p className="text-zinc-900 font-medium">{post.author.username}</p>
+              <p className="text-zinc-900 font-medium">
+                {post.author.username}
+              </p>
             </div>
             <p className="w-full text-zinc-600">{post.content}</p>
 
@@ -68,23 +88,28 @@ const View = () => {
             )}
 
             <div className="text-zinc-500 p-3 w-[300px] flex gap-4 text-xl">
-              <div
-                className="flex cursor-pointer items-center justify-center gap-1"
-              >
-                <button onClick={() => like(post._id)}>
-                  <FaRegThumbsUp />
-                </button>
+              <div className="flex cursor-pointer items-center justify-center gap-1">
+                {post.likes.includes(user._id) ? (
+                  <button onClick={() => disLike(post._id)} className="text-red-600">
+                    <FaRegThumbsUp />
+                  </button>
+                ) : (
+                  <button onClick={() => like(post._id)}>
+                    <FaRegThumbsUp />
+                  </button>
+                )}
 
                 <p className="text-sm">{post.likes.length}</p>
               </div>
-
 
               <div
                 onClick={handleComment}
                 className="flex cursor-pointer items-center justify-center gap-1"
               >
                 <FaRegComment />
-                <p className="text-sm font-normal text-zinc-600 ">{post.comments.length}</p>
+                <p className="text-sm font-normal text-zinc-600 ">
+                  {post.comments.length}
+                </p>
               </div>
             </div>
           </div>
@@ -113,7 +138,7 @@ const View = () => {
                         </p>
                       </div>
                     ))
-                  :""}
+                  : ""}
               </div>
             </div>
           )}

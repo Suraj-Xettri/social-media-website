@@ -1,5 +1,4 @@
 import React from 'react'
-import Events from './Events/Events'
 import Create from './Create/Create'
 
 const Post = () => {
