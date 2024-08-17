@@ -1,15 +1,18 @@
 import React from "react";
 
-const CreatePost = ({handleCreate}) => {
+const CreatePost = ({ handleCreate }) => {
   return (
-    <div className="fixed left-0 top-0 z-30 bg-zinc-300 w-screen h-screen flex items-center justify-center">
+    <div className="fixed backdrop-blur-[6px] left-0 top-0 z-30 w-screen h-screen flex items-center justify-center">
+      <div className="absolute inset-0 bg-zinc-900 bg-opacity-80 backdrop-blur-sm"></div>
       <div className=" relative bg-white rounded-2xl mx-auto p-8">
-
-        <div onClick={handleCreate} className="absolute h-10 w-10 bg-red-600 right-0 top-0 cursor-pointer"></div>
+        <div
+          onClick={handleCreate}
+          className="absolute h-10 w-10 bg-red-600 right-0 top-0 cursor-pointer"
+        ></div>
         <h1 className="text-2xl font-semibold mb-6">Create Post</h1>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="flex w-[60vw]  md:grid-cols-3 gap-6">
           {/* Left Column: Post Inputs */}
-          <div className="md:col-span-2">
+          <div className="md:col-span-2 w-[30vw]">
             {/* Title Input */}
             <div className="mb-4">
               <label className="block text-2xl font-medium text-zinc-900">
@@ -49,9 +52,7 @@ const CreatePost = ({handleCreate}) => {
               </div>
             </div>
 
-            <div className="w-[200px] h-[200px] rounded-xl bg-zinc-500">
-                
-            </div>
+            <div className="w-[340px] h-[200px] rounded-xl bg-zinc-500"></div>
           </div>
         </div>
       </div>

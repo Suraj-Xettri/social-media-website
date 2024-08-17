@@ -40,7 +40,7 @@ const Sidebar = ({ handleCreate }) => {
 
   const { user } = useSelector((store) => store.auth);
   return (
-    <div className="fixed top-20 z-10 left-10 w-[17vw]">
+    <div className="fixed top-20 z-10 left-10 w-[17vw] h-full">
       <div className="bg-zinc-200 pl-5 h-[85vh]  rounded-xl text-zinc-900 flex flex-col gap-10">
         <div className="flex flex-col gap-2 items-center pt-5">
           <div className="h-10 w-10 rounded-full flex items-center justify-center">
