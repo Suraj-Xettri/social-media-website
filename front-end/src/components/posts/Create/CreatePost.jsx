@@ -55,6 +55,7 @@ const CreatePost = () => {
             className="flex-1 border-none outline-none text-zinc-700 bg-transparent text-lg"
           />
           <button
+            disabled={!content}
             type="submit"
             className="px-8 py-2 bg-blue-500 rounded-2xl text-white font-semibold"
           >

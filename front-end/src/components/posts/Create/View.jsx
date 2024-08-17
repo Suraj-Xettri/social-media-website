@@ -31,12 +31,6 @@ const View = () => {
           withCredentials: true,
         }
       );
-
-      if (response.data.success) {
-        toast.success("Success");
-      } else {
-        toast.error(response.data.message);
-      }
     } catch (error) {
       toast.error(error.message);
     }
@@ -51,12 +45,6 @@ const View = () => {
           withCredentials: true,
         }
       );
-
-      if (response.data.success) {
-        toast.success("Success");
-      } else {
-        toast.error(response.data.message);
-      }
     } catch (error) {
       toast.error(error.message);
     }
