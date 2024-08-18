@@ -7,7 +7,7 @@ const comment = async (req, res) => {
     const { content } = req.body;
     
     if (!content) {
-      return res.status(400).json({ error: 'Content is required' });
+      return res.send({ success:false,  message: 'Content is required' });
     }
     
     const user = await User.findOne({ email: req.user.email });

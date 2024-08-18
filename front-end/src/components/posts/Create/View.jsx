@@ -11,7 +11,6 @@ const View = () => {
   const [posts, setPosts] = useState([]);
   const { user } = useSelector((store) => store.auth);
   const [content, setContent] = useState("");
-  const [comment, setComment] = useState([]);
 
   const setComments = (e) => {
     setContent(e.target.value);
@@ -19,14 +18,12 @@ const View = () => {
 
   const handleComment = (postId) => {
     setSelectedPostId((prevId) => (prevId === postId ? null : postId));
-
   };
 
   const getPosts = async () => {
     const posts = await axios.get("http://localhost:3000/posts");
     setPosts(posts.data);
   };
-
 
   useEffect(() => {
     getPosts();
@@ -41,12 +38,12 @@ const View = () => {
           withCredentials: true,
         }
       );
-      if(!response.data.success){
-        toast.error(response.message)
+      if (!response.data.success) {
+        toast.error(response.message);
         return;
       }
     } catch (error) {
-      toast.error("Log in first");
+      toast.error(error.message);
     }
   };
 
@@ -72,7 +69,7 @@ const View = () => {
     try {
       const response = await axios.post(
         `http://localhost:3000/comment/${post_id}`,
-        { content, author: user._id, post: post_id },
+        { content, author: user?._id, post: post_id },
         {
           headers: {
             "Content-Type": "application/json",
@@ -122,13 +119,13 @@ const View = () => {
               <div className="flex cursor-pointer items-center justify-center gap-1">
                 {post.likes.includes(user?._id) ? (
                   <button
-                    onClick={() => disLike(post._id)}
+                    onClick={() => disLike(post?._id)}
                     className="text-red-600"
                   >
                     <FaRegThumbsUp />
                   </button>
                 ) : (
-                  <button onClick={() => like(post._id)}>
+                  <button onClick={() => like(post?._id)}>
                     <FaRegThumbsUp />
                   </button>
                 )}
@@ -148,51 +145,55 @@ const View = () => {
 
             {/* Render the comment section only for the selected post */}
             {selectedPostId === post._id && (
-              <div className="absolute w-[450px] max-h-[420px] -bottom-15 z-20 bg-white p-4 right-0">
-                <div className="relative scrol flex h-full flex-col overflow-y-scroll ">
-                  <IoMdClose
-                    onClick={() => handleComment(post._id)}
-                    className="absolute text-xl right-0 cursor-pointer top-0"
-                  />
-                  {post.comments.length > 0 ? (
-                    post.comments.map((comment) => (
-                      <div
-                        key={comment._id}
-                        className="flex gap-2 items-center mb-2"
-                      >
-                        <img
-                          src={post.author.profilePicture || "/default.png"}
-                          alt=""
-                          className="w-8 h-8 rounded-full"
-                        />
-                        <div className="flex flex-col">
-                          <p className="text-sm w-[200px] flex items-end p-2 rounded-xl bg-zinc-100">
-                            {comment?.content}
-                          </p>
-                          <p className=" text-[10px] text-zinc-400">{post.author.username}</p>
+              <div className="relative">
+                <div className="absolute w-[450px] max-h-[420px] scrol overflow-y-scroll -bottom-15 z-20 bg-white px-4 pt-4 right-0">
+                  <div className="relative flex h-full flex-col ">
+                    <IoMdClose
+                      onClick={() => handleComment(post._id)}
+                      className="absolute text-xl right-0 cursor-pointer top-0"
+                    />
+                    {post.comments.length > 0 ? (
+                      post.comments.map((comment) => (
+                        <div
+                          key={comment._id}
+                          className="flex gap-2 items-center mb-2"
+                        >
+                          <img
+                            src={post.author.profilePicture || "/default.png"}
+                            alt=""
+                            className="w-8 h-8 rounded-full"
+                          />
+                          <div className="flex flex-col">
+                            <p className="text-sm w-[200px] flex items-end p-2 rounded-xl bg-zinc-100">
+                              {comment?.content}
+                            </p>
+                            <p className=" text-[10px] text-zinc-400">
+                              {post.author.username}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    ))
-                  ) : (
-                    <p>No comments yet</p>
-                  )}
-                </div>
+                      ))
+                    ) : (
+                      <p>No comments yet</p>
+                    )}
+                  </div>
 
-                <form
-                  onSubmit={(e) => commentForm(post._id, e)}
-                  className="flex gap-5 box-border justify-between mt-5"
-                >
-                  <input
-                    onChange={setComments}
-                    value={content}
-                    type="text"
-                    className="flex-1 px-2 py-3 focus:bg-slate-100"
-                    placeholder="Write Your comment"
-                  />
-                  <button className="text-2xl">
-                    <IoMdSend />
-                  </button>
-                </form>
+                  <form
+                    onSubmit={(e) => commentForm(post._id, e)}
+                    className="sticky bottom-0 w-full flex z-20 mt-5"
+                  >
+                    <input
+                      onChange={setComments}
+                      value={content}
+                      type="text"
+                      className="flex-1 px-2 py-3 focus:bg-slate-100"
+                      placeholder="Write Your comment"
+                    />
+                    <button className="text-2xl">
+                      <IoMdSend />
+                    </button>
+                  </form>
+                </div>
               </div>
             )}
           </div>

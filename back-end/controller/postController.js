@@ -41,34 +41,22 @@ const createPost = async (req, res) => {
 
 const like = async (req, res) => {
   try {
-
-    if (!req.user || !req.user.email) {
-      return res.send({
-        message: "Unauthorized. Please log in first.",
-        success: false,
-      });
-    }
-    
     const user = await User.findOne({ email: req.user.email });
 
-    
+    if (!user) return { message: "You need to log in first", success: false };
 
     const post = await Post.findOne({ _id: req.params.id });
 
-    if (!post) {
-      return res.send({ message: "Post not found", success: false });
-    }
+    if (post.likes.includes(user._id))
+      return res.send({ message: "You cannot like twice", success: false });
 
     post.likes.push(user._id);
     await post.save();
     res.send({ message: "liked sucessfully", success: true });
   } catch (error) {
-    res.send({ message: "catch", success: false });
+    res.send({ message: error.message, success: false });
   }
 };
-
-
-
 
 const dislike = async (req, res) => {
   try {
@@ -95,7 +83,7 @@ const comments = async (req, res) => {
   const post = await Post.findOne({ _id: req.params.id });
   const comments = await Comment.find({ post: post._id });
 
-  res.send({ success: true, message: "Success", comments });
+  res.send({success:true , message:"Success", comments});
 };
 
 const postControl = {

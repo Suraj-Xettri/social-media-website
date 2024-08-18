@@ -4,21 +4,19 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 const CreatePost = () => {
   const [content, setContent] = useState("");
-
-  const {user} = useSelector(store => store.auth)
+  const { user } = useSelector((store) => store.auth);
 
   const handleContent = (e) => {
-    setContent(e.target.value)
+    setContent(e.target.value);
   };
 
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const responce = await axios.post(
         "http://localhost:3000/posts/create",
-        {content},
+        { content, author: user._id },
         {
           headers: {
             "Content-Type": "application/json",
@@ -29,19 +27,23 @@ const CreatePost = () => {
 
       if (responce.data.success) {
         toast.success(responce.data.message);
-        setContent("")
+        setContent("");
       } else {
         toast.error(responce.data.message);
       }
     } catch (error) {
-      toast.error(error.message)
+      toast.error(error.message);
     }
   };
 
   return (
     <div className="flex border-b border-zinc-400 p-5 w-full">
       <div className="flex gap-3 items-end w-full">
-        <img src={user?.profilePic || "/default.png"} alt="" className="w-12 h-12 rounded-full" />
+        <img
+          src={user.profilePic || "/default.png"}
+          alt=""
+          className="w-12 h-12 rounded-full"
+        />
         <form
           onSubmit={handleSubmit}
           className="w-full flex justify-between flex-1"
