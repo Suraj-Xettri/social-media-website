@@ -12,8 +12,11 @@ const comment = async (req, res) => {
     
     const user = await User.findOne({ email: req.user.email });
     const post = await Post.findOne({ _id: req.params.postID });
+    if (!user) {
+      return res.send({ message: 'You need to login First' , success:false});
+    }
     if (!post) {
-      return res.status(404).json({ error: 'Post not found' });
+      return res.send({ message: 'Post not found' , success:false});
     }
     
     const comment = await Comment.create({
@@ -25,10 +28,9 @@ const comment = async (req, res) => {
     post.comments.push(comment._id);
     await post.save();
 
-    res.status(201).json(post);
+    res.send({ message: 'Commented Successfully' , success:true});
   } catch (error) {
-    console.error('Error creating comment:', error);
-    res.status(500).json({ error: 'Server error' });
+    res.send({ message: error , success:false});
   }
 };
 

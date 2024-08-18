@@ -10,6 +10,7 @@ export const Register = () => {
   const [data, setdata] = useState({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
   const handleInput = (e) => {
     let name = e.target.name;
     let value = e.target.value;
