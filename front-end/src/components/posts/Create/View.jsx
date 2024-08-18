@@ -17,20 +17,33 @@ const View = () => {
     setContent(e.target.value);
   };
 
-  const handleComment = (postId) => {
-    setSelectedPostId((prevId) => (prevId === postId ? null : postId));
-  };
-
   const getPosts = async () => {
     const posts = await axios.get("http://localhost:3000/posts");
     setPosts(posts.data);
   };
 
   const getComments = async (id) => {
-    const comment = await axios.get(`http://localhost:3000/posts/comment/${id}`);
-    setComment(comment.data);
+    try {
+      if (selectedPostId === id) {
+        // If the same post is clicked, toggle it closed
+        setSelectedPostId(null);
+        setComment([]);
+      } else {
+        setSelectedPostId(id); // Set the selected post ID
+        const response = await axios.get(
+          `http://localhost:3000/posts/comment/${id}`
+        );
+        setComment(response.data);
+        console.log(comment)
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
+  const handleComment = (postId) => {
+    getComments(postId);
+  };
   useEffect(() => {
     getPosts();
   }, []); // Added dependency array to avoid infinite loop
@@ -71,10 +84,7 @@ const View = () => {
     try {
       const response = await axios.post(
         `http://localhost:3000/comment/${post_id}`,
-        { content,
-          author: user._id,
-          post: post_id
-         },
+        { content, author: user._id, post: post_id },
         {
           headers: {
             "Content-Type": "application/json",
@@ -163,7 +173,9 @@ const View = () => {
                         className="flex gap-2 items-center mb-2"
                       >
                         <img
-                          src={comment?.author?.profilePicture || "/default.png"}
+                          src={
+                            comment?.author?.profilePicture || "/default.png"
+                          }
                           alt=""
                           className="w-8 h-8 rounded-full"
                         />
