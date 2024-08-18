@@ -42,11 +42,11 @@ export const Login = () => {
         dispatch(setAuthUser(response.data.activeUser));
         navigate("/home");
         toast.success(response.data.message);
-        console.log(response);
+        
       } else {
         toast.error(response.data.message);
         navigate("/login");
-        console.log(response);
+      
       }
     } catch (error) {
       toast.success(error);
