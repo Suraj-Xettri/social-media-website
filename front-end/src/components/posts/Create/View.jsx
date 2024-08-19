@@ -95,7 +95,7 @@ const View = () => {
   };
 
   return (
-    <div className="p-3">
+    <div className="relative p-3">
       {posts.map((post) => (
         <div key={post._id} className="flex gap-2 w-full p-2 relative border-b">
           <img
@@ -114,7 +114,7 @@ const View = () => {
             {post.image && (
               <div className="min-w-[200px] mt-2 max-w-[500px] min-h-[200px] h-[300px] max-[350px] rounded-3xl bg-gray-500">
                 <img
-                  src={post.image}
+                  src={post.image.toString('base64')}
                   alt=""
                   className="w-full h-full rounded-2xl"
                 />
