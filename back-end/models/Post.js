@@ -5,11 +5,16 @@ const PostSchema = new Schema({
   content: {
     type: String,
     required: true,
+  }, title: {
+    type: String,
   },
   author: {
     type: Schema.Types.ObjectId,
     ref: "User",
     required: true,
+  },
+  image:{
+    type: Buffer
   },
   likes: [{
     type: Schema.Types.ObjectId,

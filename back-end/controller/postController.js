@@ -23,21 +23,36 @@ const posts = async (req, res) => {
   }
 };
 
+
+
 const createPost = async (req, res) => {
   try {
-    const { content } = req.body;
+    const { content, title} = req.body;
     const user = await User.findOne({ email: req.user.email });
+
+    // Check if an image was uploaded
+    let imageBuffer = null;
+    if (req.file) {
+      imageBuffer = req.file.buffer; // Access the file buffer
+    }
+
     const post = await Post.create({
       content,
+      title,
+      image: imageBuffer, // Save the image buffer
       author: user._id,
     });
-    user.post.push(post._id);
-    user.save();
-    res.send({ success: true, message: "Post created Sucessfully", post });
+
+    user.post.push(post._id); // Assuming 'posts' is the array name
+    await user.save();
+
+    res.send({ success: true, message: "Post created successfully", post });
   } catch (error) {
     res.send({ success: false, message: error.message });
   }
 };
+
+
 
 const like = async (req, res) => {
   try {

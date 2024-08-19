@@ -38,7 +38,9 @@ const View = () => {
           withCredentials: true,
         }
       );
-      if (!response.data.success) {
+      if (response.data.success) {
+        getPosts();
+      } else {
         toast.error(response.message);
         return;
       }
@@ -56,8 +58,11 @@ const View = () => {
           withCredentials: true,
         }
       );
-      if (!response.data.success) {
-        return toast.error(response.data.message);
+      if (response.data.success) {
+        getPosts();
+      } else {
+        toast.error(response.message);
+        return;
       }
     } catch (error) {
       toast.error(error.message);
@@ -78,6 +83,7 @@ const View = () => {
         }
       );
       if (response.data.success) {
+        getPosts();
         toast.success(response.data.message);
         setContent("");
       } else {
@@ -105,10 +111,10 @@ const View = () => {
             </div>
             <p className="w-full text-zinc-600">{post.content}</p>
 
-            {post.author.profilePicture && (
+            {post.image && (
               <div className="min-w-[200px] mt-2 max-w-[500px] min-h-[200px] h-[300px] max-[350px] rounded-3xl bg-gray-500">
                 <img
-                  src={post.author.profilePicture}
+                  src={post.image}
                   alt=""
                   className="w-full h-full rounded-2xl"
                 />
