@@ -7,7 +7,7 @@ const postRouter = express.Router();
 postRouter.get("/", postControl.posts)
 
 
-postRouter.post("/create", upload.single("image"), isLoggedIn, postControl.createPost);
+postRouter.post("/create", upload.single('image'), isLoggedIn, postControl.createPost);
 
 postRouter.post("/like/:id", isLoggedIn, postControl.like );
 

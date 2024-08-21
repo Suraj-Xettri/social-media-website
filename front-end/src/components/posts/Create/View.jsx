@@ -112,15 +112,14 @@ const View = () => {
             <p className="w-full text-zinc-600">{post.content}</p>
 
             {post.image && (
-              <div className="min-w-[200px] mt-2 max-w-[500px] min-h-[200px] h-[300px] max-[350px] rounded-3xl bg-gray-500">
+              <div className="w-[80%] mt-2 max-w-[500px] min-h-[200px] h-[300px] max-[350px] rounded-3xl bg-gray-500">
                 <img
-                  src={post.image.toString('base64')}
+                  src={`/posts/${post.image}`}
                   alt=""
                   className="w-full h-full rounded-2xl"
                 />
               </div>
             )}
-
             <div className="text-zinc-500 p-3 w-[300px] flex gap-4 text-xl">
               <div className="flex cursor-pointer items-center justify-center gap-1">
                 {post.likes.includes(user?._id) ? (

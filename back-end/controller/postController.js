@@ -30,20 +30,14 @@ const createPost = async (req, res) => {
     const { content, title} = req.body;
     const user = await User.findOne({ email: req.user.email });
 
-    // Check if an image was uploaded
-    let imageBuffer = null;
-    if (req.file) {
-      imageBuffer = req.file.buffer; // Access the file buffer
-    }
-
     const post = await Post.create({
       content,
       title,
-      image: imageBuffer, // Save the image buffer
+      image: req.file.filename, 
       author: user._id,
     });
 
-    user.post.push(post._id); // Assuming 'posts' is the array name
+    user.post.push(post._id);
     await user.save();
 
     res.send({ success: true, message: "Post created successfully", post });
