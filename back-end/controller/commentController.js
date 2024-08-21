@@ -34,5 +34,13 @@ const comment = async (req, res) => {
   }
 };
 
+const getComment = async (req, res) => {
+  const comment = await Comment.find({post: req.params._id})
+  res.send(comment)
+}
+const comments = {
+  comment,
+  getComment
+}
 
-export default comment
+export default comments

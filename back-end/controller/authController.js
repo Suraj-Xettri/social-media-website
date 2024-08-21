@@ -19,9 +19,11 @@ const registerUser = async (req, res) => {
           success: false,
           message: "Something went wrong while registere",
         });
+
       const user = await User.create({
         username,
         email,
+        profilePicture: req.file.filename,
         password: hash,
       });
 
@@ -91,6 +93,8 @@ const login = async (req, res) => {
           message: `welcome ${existingUser.username}`,
           activeUser,
         });
+
+      console.log(process.env.CITY);
     });
   } catch (error) {
     res.status(500).send("Server error");
@@ -98,15 +102,13 @@ const login = async (req, res) => {
 };
 
 const logout = async (req, res) => {
-
   try {
     res
-    .cookie("token", "", { maxAge: 0 })
-    .send({ success: true, message: "Log Out Succesfully" });
+      .cookie("token", "", { maxAge: 0 })
+      .send({ success: true, message: "Log Out Succesfully" });
   } catch (error) {
-    res.send({success:false , message:error.message})
+    res.send({ success: false, message: error.message });
   }
-  
 };
 
 const auth = {

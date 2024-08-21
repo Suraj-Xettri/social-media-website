@@ -1,7 +1,7 @@
 import express from "express";
 import postControl from "../controller/postController.js";
 import { isLoggedIn } from "../config/isLoggedIn.js";
-import upload from "../config/multer-config.js";
+import { upload } from "../config/multer-config.js";
 const postRouter = express.Router();
 
 postRouter.get("/", postControl.posts)

@@ -5,7 +5,6 @@ import Comment from "../models/Comment.js";
 const posts = async (req, res) => {
   try {
     let posts;
-
     if (req.user) {
       // If the user is logged in, exclude posts by the logged-in user
       posts = await Post.find({ author: { $ne: req.user._id } });
