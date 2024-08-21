@@ -40,7 +40,7 @@ const CreatePost = () => {
     <div className="flex border-b border-zinc-400 p-5 w-full">
       <div className="flex gap-3 items-end w-full">
         <img
-          src={user.profilePic || "/default.png"}
+          src={`/profile/${user.profilePic}`}
           alt=""
           className="w-12 h-12 rounded-full"
         />

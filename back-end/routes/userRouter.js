@@ -7,5 +7,4 @@ userRouter.post("/register", profileUpload.single("image"), auth.registerUser);
 userRouter.post("/login", auth.login);
 userRouter.get("/logout", auth.logout);
 
-
 export default userRouter;

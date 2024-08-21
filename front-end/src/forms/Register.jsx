@@ -10,10 +10,10 @@ export const Register = () => {
   const [data, setdata] = useState({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   const handleInput = (e) => {
     let name = e.target.name;
-    let value = e.target.value;
+    const value = e.target.type === "file" ? e.target.files[0] : e.target.value;
 
     setdata((prevData) => ({
       ...prevData,
@@ -27,11 +27,16 @@ export const Register = () => {
     try {
       const response = await axios.post(
         "http://localhost:3000/users/register",
-        data
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: true,
+        }
       );
       if (response.data.success) {
         dispatch(setAuthUser(response.data.activeUser));
-
         navigate("/home");
         toast.success(response.data.message);
       } else {
@@ -61,7 +66,11 @@ export const Register = () => {
           <p className="tracking-tighter">Join and be the member of AniCluB.</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="mt-5 flex flex-col gap-2">
+        <form
+          onSubmit={handleSubmit}
+          encType="multipart/form-data"
+          className="mt-5 flex flex-col gap-2"
+        >
           <div className="flex flex-col gap-1">
             <label htmlFor="username">Username</label>
             <input
@@ -81,6 +90,15 @@ export const Register = () => {
               id="email"
               name="email"
               placeholder="Email"
+              className="py-2 px-3 border-[2px] border-zinc-400 rounded-xl focus:outline-none focus:border-[3px] focus:border-blue-200"
+            />
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <input
+              onChange={handleInput}
+              type="file"
+              name="image"
               className="py-2 px-3 border-[2px] border-zinc-400 rounded-xl focus:outline-none focus:border-[3px] focus:border-blue-200"
             />
           </div>

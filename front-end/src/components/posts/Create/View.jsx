@@ -11,7 +11,7 @@ const View = () => {
   const [posts, setPosts] = useState([]);
   const { user } = useSelector((store) => store.auth);
   const [content, setContent] = useState("");
-
+  const [comment, setComment] = useState([]);
   const setComments = (e) => {
     setContent(e.target.value);
   };
@@ -22,6 +22,11 @@ const View = () => {
 
   const getPosts = async () => {
     const posts = await axios.get("http://localhost:3000/posts");
+    setPosts(posts.data);
+  };
+
+  const getComments = async (id) => {
+    const comment = await axios.get(`http://localhost:3000/comment/${id}`);
     setPosts(posts.data);
   };
 
@@ -94,13 +99,15 @@ const View = () => {
     }
   };
 
+  console.log(posts)
+
   return (
     <div className="relative p-3">
       {posts.map((post) => (
         <div key={post._id} className="flex gap-2 w-full p-2 relative border-b">
           <img
-            src={post?.author?.profilePicture || "/default.png"}
-            alt=""
+          src={`/profile/${post.author.profilePicture}`}
+          alt=""
             className="w-10 h-10 rounded-full"
           />
           <div className="w-[80vw] sm:w-[80vw] flex flex-col">
@@ -151,11 +158,11 @@ const View = () => {
             {/* Render the comment section only for the selected post */}
             {selectedPostId === post._id && (
               <div className="relative">
-                <div className="absolute w-[450px] max-h-[420px] scrol overflow-y-scroll -bottom-15 z-20 bg-white px-4 pt-4 right-0">
+                <div className="absolute w-[450px] max-h-[420px] scrol overflow-y-scroll bottom-0 z-20 bg-white px-4 pt-4 right-0">
                   <div className="relative flex h-full flex-col ">
                     <IoMdClose
                       onClick={() => handleComment(post._id)}
-                      className="absolute text-xl right-0 cursor-pointer top-0"
+                      className="sticky text-2xl cursor-pointer top-0 right-0 bg-zinc-300 rounded-xl"
                     />
                     {post.comments.length > 0 ? (
                       post.comments.map((comment) => (
