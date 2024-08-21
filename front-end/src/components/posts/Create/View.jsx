@@ -103,20 +103,20 @@ const View = () => {
             alt=""
             className="w-10 h-10 rounded-full"
           />
-          <div className="w-[70vw] sm:w-[50vw] flex flex-col">
+          <div className="w-[80vw] sm:w-[80vw] flex flex-col">
             <div className="flex justify-between items-center w-full">
-              <p className="text-zinc-900 font-medium">
-                {post.author.username}
+              <p className="text-blue-700 tracking-tighter font-medium">
+                @{post.author.username}
               </p>
             </div>
-            <p className="w-full text-zinc-600">{post.content}</p>
+            <p className="w-full text-sm text-zinc-600"> <span className="font-bold text-zinc-800">{post.title}</span>: {post.content}</p>
 
             {post.image && (
-              <div className="w-[80%] mt-2 max-w-[500px] min-h-[200px] h-[300px] max-[350px] rounded-3xl bg-gray-500">
+              <div className="w-[90%] mt-2 max-w-[500px] min-h-[200px] h-[300px] max-[350px] rounded-3xl bg-gray-500">
                 <img
                   src={`/posts/${post.image}`}
                   alt=""
-                  className="w-full h-full rounded-2xl"
+                  className="w-full h-full object-cover rounded-2xl"
                 />
               </div>
             )}
