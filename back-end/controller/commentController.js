@@ -35,9 +35,16 @@ const comment = async (req, res) => {
 };
 
 const getComment = async (req, res) => {
-  const comment = await Comment.find({post: req.params._id})
-  res.send(comment)
+ 
+ try {
+  const comment = await Comment.find({post: { $in: [req.params.id] }})
+  .populate("author", "username profilePicture")
+  res.send({success:true, message:"Succesfully",comment })
+ } catch (error) {
+  res.send({success:false, message:error})
+ } 
 }
+
 const comments = {
   comment,
   getComment

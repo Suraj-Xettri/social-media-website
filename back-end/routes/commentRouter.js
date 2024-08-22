@@ -5,6 +5,6 @@ import comments from "../controller/commentController.js";
 
 
 CommentRouter.post("/:postID", isLoggedIn, comments.comment);
-CommentRouter.get("/", isLoggedIn, comments.getComment);
+CommentRouter.get("/post/:id", comments.getComment);
 
 export default CommentRouter;

@@ -22,17 +22,15 @@ const posts = async (req, res) => {
   }
 };
 
-
-
 const createPost = async (req, res) => {
   try {
-    const { content, title} = req.body;
+    const { content, title } = req.body;
     const user = await User.findOne({ email: req.user.email });
 
     const post = await Post.create({
       content,
       title,
-      image: req.file.filename, 
+      image: req.file.filename,
       author: user._id,
     });
 
@@ -44,8 +42,6 @@ const createPost = async (req, res) => {
     res.send({ success: false, message: error.message });
   }
 };
-
-
 
 const like = async (req, res) => {
   try {
@@ -61,6 +57,14 @@ const like = async (req, res) => {
     post.likes.push(user._id);
     await post.save();
     res.send({ message: "liked sucessfully", success: true });
+  } catch (error) {
+    res.send({ message: error.message, success: false });
+  }
+};
+const deletee = async (req, res) => {
+  try {
+    const post = await Post.findOneAndDelete({ _id: req.params.id });
+    res.send({ message: "Deleted sucessfully", success: true });
   } catch (error) {
     res.send({ message: error.message, success: false });
   }
@@ -91,7 +95,7 @@ const comments = async (req, res) => {
   const post = await Post.findOne({ _id: req.params.id });
   const comments = await Comment.find({ post: post._id });
 
-  res.send({success:true , message:"Success", comments});
+  res.send({ success: true, message: "Success", comments });
 };
 
 const postControl = {
@@ -100,6 +104,7 @@ const postControl = {
   createPost,
   comments,
   posts,
+  deletee,
 };
 
 export default postControl;

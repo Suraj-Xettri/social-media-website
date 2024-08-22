@@ -10,6 +10,7 @@ postRouter.get("/", postControl.posts)
 postRouter.post("/create", upload.single('image'), isLoggedIn, postControl.createPost);
 
 postRouter.post("/like/:id", isLoggedIn, postControl.like );
+postRouter.post("/delete/:id", isLoggedIn, postControl.deletee );
 
 postRouter.post("/dislike/:id", isLoggedIn, postControl.dislike);
 

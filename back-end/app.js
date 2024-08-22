@@ -31,6 +31,6 @@ app.use(cookieParser())
 
 app.use("/users", userRouter)
 app.use("/posts", postRouter)
-app.use("/comment",isLoggedIn, CommentRouter)
+app.use("/comment", CommentRouter)
 
 app.listen(3000)

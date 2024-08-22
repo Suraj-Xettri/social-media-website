@@ -5,14 +5,22 @@ import axios from "axios";
 import { IoMdSend } from "react-icons/io";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import { SlOptions } from "react-icons/sl";
 
 const View = () => {
-  const [selectedPostId, setSelectedPostId] = useState(null); // Updated state
+  const [selectedPostId, setSelectedPostId] = useState(null);
+  const [postID, setPostID] = useState(null); // Updated state
+
+  // Updated state
   const [posts, setPosts] = useState([]);
   const { user } = useSelector((store) => store.auth);
   const [content, setContent] = useState("");
   const [comment, setComment] = useState([]);
-  const setComments = (e) => {
+
+  const handleMenu = (postId) => {
+    setPostID((prevId) => (prevId === postId ? null : postId));
+  };
+  const setContents = (e) => {
     setContent(e.target.value);
   };
 
@@ -22,11 +30,6 @@ const View = () => {
 
   const getPosts = async () => {
     const posts = await axios.get("http://localhost:3000/posts");
-    setPosts(posts.data);
-  };
-
-  const getComments = async (id) => {
-    const comment = await axios.get(`http://localhost:3000/comment/${id}`);
     setPosts(posts.data);
   };
 
@@ -45,6 +48,27 @@ const View = () => {
       );
       if (response.data.success) {
         getPosts();
+      } else {
+        toast.error(response.message);
+        return;
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const Delete = async (post_id) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:3000/posts/delete/${post_id}`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      if (response.data.success) {
+        getPosts();
+        toast.success(response.message);
       } else {
         toast.error(response.message);
         return;
@@ -89,6 +113,7 @@ const View = () => {
       );
       if (response.data.success) {
         getPosts();
+        getComments(post_id);
         toast.success(response.data.message);
         setContent("");
       } else {
@@ -99,24 +124,70 @@ const View = () => {
     }
   };
 
-  console.log(posts)
+  const getComments = async (postId) => {
+    handleComment(postId);
+    if (selectedPostId !== postId) {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/comment/post/${postId}`
+        );
+        setComment(response.data.comment);
+      } catch (error) {
+        toast.error(error.message);
+      }
+    }
+  };
 
   return (
     <div className="relative p-3">
       {posts.map((post) => (
         <div key={post._id} className="flex gap-2 w-full p-2 relative border-b">
           <img
-          src={`/profile/${post.author.profilePicture}`}
-          alt=""
+            src={`/profile/${post.author.profilePicture}`}
+            alt=""
             className="w-10 h-10 rounded-full"
           />
-          <div className="w-[80vw] sm:w-[80vw] flex flex-col">
+          <div className="relative w-[80vw] sm:w-[80vw] flex flex-col">
             <div className="flex justify-between items-center w-full">
               <p className="text-blue-700 tracking-tighter font-medium">
                 @{post.author.username}
               </p>
+
+              <SlOptions
+                onClick={() => handleMenu(post._id)}
+                className="cursor-pointer"
+              />
             </div>
-            <p className="w-full text-sm text-zinc-600"> <span className="font-bold text-zinc-800">{post.title}</span>: {post.content}</p>
+
+            {postID === post._id && (
+              <div className="absolute backdrop-blur-0 flex flex-col  right-0 top-5 bg-white  rounded-xl pt-6">
+                {user?.post?.includes(post._id) && (
+                  <button
+                    onClick={() => Delete(post._id)}
+                    className="hover:bg-zinc-200 cursor-pointer px-10 py-5"
+                  >
+                    Delete
+                  </button>
+                )}
+
+                <button className="hover:bg-zinc-200 cursor-pointer px-10 py-5">
+                  Add to Favroute
+                </button>
+
+                <button className="hover:bg-zinc-200 cursor-pointer px-10 py-5">
+                  Follow
+                </button>
+                <IoMdClose
+                  onClick={() => handleMenu(post._id)}
+                  className="absolute text-2xl cursor-pointer top-0 right-0 rounded-xl"
+                />
+              </div>
+            )}
+
+            <p className="w-full text-sm text-zinc-600">
+              <span className="font-bold text-zinc-800">{post.title}</span>:{" "}
+              {post.content}
+            </p>
 
             {post.image && (
               <div className="w-[90%] mt-2 max-w-[500px] min-h-[200px] h-[300px] max-[350px] rounded-3xl bg-gray-500">
@@ -131,21 +202,26 @@ const View = () => {
               <div className="flex cursor-pointer items-center justify-center gap-1">
                 {post.likes.includes(user?._id) ? (
                   <button
+                    disabled={!user}
                     onClick={() => disLike(post?._id)}
                     className="text-red-600"
                   >
                     <FaRegThumbsUp />
                   </button>
                 ) : (
-                  <button onClick={() => like(post?._id)}>
-                    <FaRegThumbsUp />
+                  <button disabled={!user} onClick={() => like(post?._id)}>
+                    <FaRegThumbsUp
+                      className={`${
+                        !user ? "cursor-not-allowed" : "cursor-pointer"
+                      }`}
+                    />
                   </button>
                 )}
                 <p className="text-sm">{post.likes.length}</p>
               </div>
 
               <div
-                onClick={() => handleComment(post._id)}
+                onClick={() => getComments(post._id)}
                 className="flex cursor-pointer items-center justify-center gap-1"
               >
                 <FaRegComment />
@@ -158,53 +234,57 @@ const View = () => {
             {/* Render the comment section only for the selected post */}
             {selectedPostId === post._id && (
               <div className="relative">
-                <div className="absolute w-[450px] max-h-[420px] scrol overflow-y-scroll bottom-0 z-20 bg-white px-4 pt-4 right-0">
-                  <div className="relative flex h-full flex-col ">
-                    <IoMdClose
-                      onClick={() => handleComment(post._id)}
-                      className="sticky text-2xl cursor-pointer top-0 right-0 bg-zinc-300 rounded-xl"
-                    />
-                    {post.comments.length > 0 ? (
-                      post.comments.map((comment) => (
+                <div className="absolute w-[450px] max-h-[420px] scrol overflow-y-scroll bottom-0 z-20 bg-white px-4 right-0">
+                  <div className="relative flex h-full flex-col pb-5 ">
+                    <div className="sticky p-2 text-2xl cursor-pointer top-0 right-0 bg-zinc-100 rounded-xl">
+                      <IoMdClose
+                        onClick={() => handleComment(post._id)}
+                      />
+                    </div>
+
+                    {comment && comment.length > 0 ? (
+                      comment.map((com) => (
                         <div
-                          key={comment._id}
-                          className="flex gap-2 items-center mb-2"
+                          key={com._id}
+                          className="flex gap-2 items-center mt-4 mb-2"
                         >
                           <img
-                            src={post.author.profilePicture || "/default.png"}
-                            alt=""
+                            src={`/profile/${com.author.profilePicture}`}
+                            alt={com.author.username}
                             className="w-8 h-8 rounded-full"
                           />
                           <div className="flex flex-col">
                             <p className="text-sm w-[200px] flex items-end p-2 rounded-xl bg-zinc-100">
-                              {comment?.content}
+                              {com.content}
                             </p>
                             <p className=" text-[10px] text-zinc-400">
-                              {post.author.username}
+                              {com.author.username}
                             </p>
                           </div>
                         </div>
                       ))
                     ) : (
-                      <p>No comments yet</p>
+                      <p className="mt-4">No comments yet</p>
                     )}
                   </div>
 
-                  <form
-                    onSubmit={(e) => commentForm(post._id, e)}
-                    className="sticky bottom-0 w-full flex z-20 mt-5"
-                  >
-                    <input
-                      onChange={setComments}
-                      value={content}
-                      type="text"
-                      className="flex-1 px-2 py-3 focus:bg-slate-100"
-                      placeholder="Write Your comment"
-                    />
-                    <button className="text-2xl">
-                      <IoMdSend />
-                    </button>
-                  </form>
+                  {user && (
+                    <form
+                      onSubmit={(e) => commentForm(post._id, e)}
+                      className="sticky bottom-0 w-full flex z-20 mt-5"
+                    >
+                      <input
+                        onChange={setContents}
+                        value={content}
+                        type="text"
+                        className="flex-1 px-2 py-3 focus:bg-slate-100"
+                        placeholder="Write Your comment"
+                      />
+                      <button className="text-2xl">
+                        <IoMdSend />
+                      </button>
+                    </form>
+                  )}
                 </div>
               </div>
             )}
