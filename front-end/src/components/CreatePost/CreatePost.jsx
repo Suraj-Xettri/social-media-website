@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import axios from "axios"
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+
 const CreatePost = ({ handleCreate }) => {
   const [content, setContent] = useState({});
   const { user } = useSelector((store) => store.auth);
-
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -33,7 +33,8 @@ const CreatePost = ({ handleCreate }) => {
       if (response.data.success) {
         toast.success(response.data.message);
         setContent({});
-        console.log(response)
+        handleCreate();
+        
       } else {
         toast.error(response.data.message);
       }
@@ -52,7 +53,6 @@ const CreatePost = ({ handleCreate }) => {
     }));
   };
   
-
   return (
     <div className="fixed backdrop-blur-[6px] left-0 top-0 z-30 w-screen h-screen flex items-center justify-center">
       <div className="absolute inset-0 bg-zinc-900 bg-opacity-80 backdrop-blur-sm"></div>

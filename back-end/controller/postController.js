@@ -61,6 +61,7 @@ const like = async (req, res) => {
     res.send({ message: error.message, success: false });
   }
 };
+
 const deletee = async (req, res) => {
   try {
     const post = await Post.findOneAndDelete({ _id: req.params.id });
