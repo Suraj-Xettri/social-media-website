@@ -57,6 +57,29 @@ const View = () => {
     }
   };
 
+  
+  const follow = async (user_id, post_id) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:3000/users/follow/${user_id}`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      if (response.data.success) {
+        toast.success(response.success)
+        handleMenu(post_id)
+      } else {
+        toast.error(response.message);
+        return;
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+
   const Delete = async (post_id) => {
     try {
       const response = await axios.post(
@@ -161,6 +184,16 @@ const View = () => {
 
             {postID === post._id && (
               <div className="absolute backdrop-blur-0 flex flex-col  right-0 top-5 bg-white  rounded-xl pt-6">
+                
+
+                <button className="hover:bg-zinc-200 cursor-pointer px-10 py-5">
+                  Add to Favroute
+                </button>
+
+                <button onClick={() => follow(user?._id, post._id)} className="hover:bg-zinc-200 cursor-pointer px-10 py-5">
+                  Follow
+                </button>
+
                 {user?.post?.includes(post._id) && (
                   <button
                     onClick={() => Delete(post._id)}
@@ -169,14 +202,6 @@ const View = () => {
                     Delete
                   </button>
                 )}
-
-                <button className="hover:bg-zinc-200 cursor-pointer px-10 py-5">
-                  Add to Favroute
-                </button>
-
-                <button className="hover:bg-zinc-200 cursor-pointer px-10 py-5">
-                  Follow
-                </button>
                 <IoMdClose
                   onClick={() => handleMenu(post._id)}
                   className="absolute text-2xl cursor-pointer top-0 right-0 rounded-xl"

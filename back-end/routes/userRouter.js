@@ -5,6 +5,7 @@ const userRouter = express.Router();
 
 userRouter.post("/register", profileUpload.single("image"), auth.registerUser);
 userRouter.post("/login", auth.login);
+userRouter.post("/follow/:id", auth.follow);
 userRouter.get("/logout", auth.logout);
 
 export default userRouter;

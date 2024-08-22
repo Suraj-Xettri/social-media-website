@@ -4,6 +4,7 @@ import generateToken from "../utils/generateToken.js";
 
 const registerUser = async (req, res) => {
   try {
+    
     const { username, email, password } = req.body;
 
     let existingUser = await User.findOne({ email });
@@ -111,10 +112,29 @@ const logout = async (req, res) => {
   }
 };
 
+const follow = async (req, res) => {
+  try {
+    const owner = await User.findOne({ email: req.user.email });
+    if (!owner) return { message: "You need to log in first", success: false };
+
+    const user = await User.findOne({_id: req.params.id})
+    user.followers.push(owner._id);
+    await user.save();
+
+    owner.following.push(user._id)
+    await owner.save();
+
+    res.send({ message: "Followed sucessfully", success: true, owner, user });
+  } catch (error) {
+    res.send({ message: error.message, success: false });
+  }
+};
+
 const auth = {
   registerUser,
   login,
   logout,
+  follow,
 };
 
 export default auth;
