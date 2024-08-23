@@ -11,7 +11,7 @@ const posts = async (req, res) => {
     } else {
       // If the user is not logged in, show all posts
       posts = await Post.find()
-        .populate("author", "username profilePicture")
+        .populate("author", " _id username profilePicture")
         .populate("comments", "content");
     }
 
@@ -25,12 +25,13 @@ const posts = async (req, res) => {
 const createPost = async (req, res) => {
   try {
     const { content, title } = req.body;
+    const image = req.file ? req.file.filename : ""
     const user = await User.findOne({ email: req.user.email });
 
     const post = await Post.create({
       content,
       title,
-      image: req.file.filename,
+      image,
       author: user._id,
     });
 

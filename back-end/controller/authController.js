@@ -7,6 +7,8 @@ const registerUser = async (req, res) => {
     
     const { username, email, password } = req.body;
 
+    const profilePicture = req.file ? req.file.filename : "default.jpg"; // Replace "default.jpg" with your actual default image path
+
     let existingUser = await User.findOne({ email });
     if (existingUser) {
       return res
@@ -20,11 +22,11 @@ const registerUser = async (req, res) => {
           success: false,
           message: "Something went wrong while registere",
         });
-
+//66c8267a2ba6c987172f7a58
       const user = await User.create({
         username,
         email,
-        profilePicture: req.file.filename,
+        profilePicture,
         password: hash,
       });
 
@@ -34,6 +36,8 @@ const registerUser = async (req, res) => {
         email: user.email,
         profilePic: user.profilePicture,
         post: user.post,
+        followers: user.followers,
+        following: user.following
       };
       let token = generateToken(user);
       res
@@ -46,6 +50,7 @@ const registerUser = async (req, res) => {
           success: true,
           message: `welcome ${user.username}`,
           activeUser,
+          user
         });
     });
   } catch (error) {
@@ -82,6 +87,8 @@ const login = async (req, res) => {
         email: existingUser.email,
         profilePic: existingUser.profilePicture,
         post: existingUser.post,
+        followers: existingUser.followers,
+        following: existingUser.following
       };
       res
         .cookie("token", token, {
@@ -125,6 +132,27 @@ const follow = async (req, res) => {
     await owner.save();
 
     res.send({ message: "Followed sucessfully", success: true, owner, user });
+  } catch (error) {
+    res.send({ message: error.message, success: false });
+  }
+};
+
+
+const unfollow = async (req, res) => {
+  try {
+    const owner = await User.findOne({ email: req.user.email });
+    if (!owner) return res.send({ message: "You need to log in first", success: false });
+
+
+    const user = await User.findOne({_id: req.params.id})
+
+    if(!owner.following.includes(user._id)) return res.send({success:false, message:"You haven't followed to do unfollow "})
+
+    user.followers.pop(owner._id);
+    await user.save();
+    owner.following.pop(user._id)
+    await owner.save();
+    res.send({ message: "UnfollowedFollowed sucessfully", success: true, owner, user });
   } catch (error) {
     res.send({ message: error.message, success: false });
   }

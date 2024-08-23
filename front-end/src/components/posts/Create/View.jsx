@@ -57,8 +57,7 @@ const View = () => {
     }
   };
 
-  
-  const follow = async (user_id, post_id) => {
+  const follow = async (user_id) => {
     try {
       const response = await axios.post(
         `http://localhost:3000/users/follow/${user_id}`,
@@ -68,17 +67,33 @@ const View = () => {
         }
       );
       if (response.data.success) {
-        toast.success(response.success)
-        handleMenu(post_id)
+        toast.success(response.success);
       } else {
         toast.error(response.message);
-        return;
       }
     } catch (error) {
       toast.error(error.message);
     }
   };
 
+  const unfollow = async (user_id) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:3000/users/unfollow/${user_id}`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      if (response.data.success) {
+        toast.success(response.success);
+      } else {
+        toast.error(response.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   const Delete = async (post_id) => {
     try {
@@ -183,25 +198,38 @@ const View = () => {
             </div>
 
             {postID === post._id && (
-              <div className="absolute backdrop-blur-0 flex flex-col  right-0 top-5 bg-white  rounded-xl pt-6">
-                
-
+              <div className="absolute backdrop-blur-0 flex flex-col right-0 top-5 bg-white rounded-xl pt-6 z-20">
                 <button className="hover:bg-zinc-200 cursor-pointer px-10 py-5">
-                  Add to Favroute
+                  Add to Favorite
                 </button>
 
-                <button onClick={() => follow(user?._id, post._id)} className="hover:bg-zinc-200 cursor-pointer px-10 py-5">
-                  Follow
-                </button>
-
-                {user?.post?.includes(post._id) && (
+                {user?.post?.includes(post._id) ? (
                   <button
                     onClick={() => Delete(post._id)}
                     className="hover:bg-zinc-200 cursor-pointer px-10 py-5"
                   >
                     Delete
                   </button>
+                ) : (
+                  <div className="w-full hover:bg-zinc-200  px-10 py-5">
+                    {user?.following?.includes(post?.author?._id) ? (
+                      <button
+                        onClick={() => unfollow(user?._id)}
+                        className="cursor-pointer w-full"
+                      >
+                        Unfollow
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => follow(user?._id)}
+                        className="w-full cursor-pointer"
+                      >
+                        Follow
+                      </button>
+                    )}
+                  </div>
                 )}
+
                 <IoMdClose
                   onClick={() => handleMenu(post._id)}
                   className="absolute text-2xl cursor-pointer top-0 right-0 rounded-xl"
@@ -262,9 +290,7 @@ const View = () => {
                 <div className="absolute w-[450px] max-h-[420px] scrol overflow-y-scroll bottom-0 z-20 bg-white px-4 right-0">
                   <div className="relative flex h-full flex-col pb-5 ">
                     <div className="sticky p-2 text-2xl cursor-pointer top-0 right-0 bg-zinc-100 rounded-xl">
-                      <IoMdClose
-                        onClick={() => handleComment(post._id)}
-                      />
+                      <IoMdClose onClick={() => handleComment(post._id)} />
                     </div>
 
                     {comment && comment.length > 0 ? (
