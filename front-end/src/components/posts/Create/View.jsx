@@ -67,12 +67,16 @@ const View = () => {
         }
       );
       if (response.data.success) {
-        toast.success(response.success);
+        toast.success(response.data.success);
+        getPosts();
+        console.log(response)
       } else {
-        toast.error(response.message);
+        toast.error(response.data.message);
+        console.log(response)
       }
     } catch (error) {
       toast.error(error.message);
+      console.log(response)
     }
   };
 
@@ -87,6 +91,7 @@ const View = () => {
       );
       if (response.data.success) {
         toast.success(response.success);
+        getPosts();
       } else {
         toast.error(response.message);
       }
@@ -192,8 +197,9 @@ const View = () => {
               </p>
 
               <SlOptions
-                onClick={() => handleMenu(post._id)}
-                className="cursor-pointer"
+                onClick={() => user ? handleMenu(post._id) : ""}
+                className={`${user ? "cursor-pointer" : "cursor-not-allowed"}`}
+                disabled = {!user}
               />
             </div>
 

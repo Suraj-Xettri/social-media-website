@@ -4,7 +4,6 @@ import generateToken from "../utils/generateToken.js";
 
 const registerUser = async (req, res) => {
   try {
-    
     const { username, email, password } = req.body;
 
     const profilePicture = req.file ? req.file.filename : "default.jpg"; // Replace "default.jpg" with your actual default image path
@@ -22,7 +21,7 @@ const registerUser = async (req, res) => {
           success: false,
           message: "Something went wrong while registere",
         });
-//66c8267a2ba6c987172f7a58
+      //66c8267a2ba6c987172f7a58
       const user = await User.create({
         username,
         email,
@@ -37,7 +36,7 @@ const registerUser = async (req, res) => {
         profilePic: user.profilePicture,
         post: user.post,
         followers: user.followers,
-        following: user.following
+        following: user.following,
       };
       let token = generateToken(user);
       res
@@ -50,7 +49,7 @@ const registerUser = async (req, res) => {
           success: true,
           message: `welcome ${user.username}`,
           activeUser,
-          user
+          user,
         });
     });
   } catch (error) {
@@ -88,7 +87,7 @@ const login = async (req, res) => {
         profilePic: existingUser.profilePicture,
         post: existingUser.post,
         followers: existingUser.followers,
-        following: existingUser.following
+        following: existingUser.following,
       };
       res
         .cookie("token", token, {
@@ -121,38 +120,66 @@ const logout = async (req, res) => {
 
 const follow = async (req, res) => {
   try {
+    // Fetch the logged-in user (owner)
     const owner = await User.findOne({ email: req.user.email });
-    if (!owner) return { message: "You need to log in first", success: false };
+    if (!owner)
+      return res.send({ message: "You need to log in first", success: false });
 
-    const user = await User.findOne({_id: req.params.id})
+    // Fetch the user to be followed
+    const user = await User.findOne({ _id: req.params.id });
+    if (!user) return res.send({ message: "User not found", success: false });
+
+    // Check if the owner is already following the user
+    if (user.followers.includes(owner._id)) {
+      return res.send({
+        message: "You have already followed this user",
+        success: false,
+      });
+    }
+
+    // Perform the follow operation
     user.followers.push(owner._id);
     await user.save();
 
-    owner.following.push(user._id)
+    owner.following.push(user._id);
     await owner.save();
 
-    res.send({ message: "Followed sucessfully", success: true, owner, user });
+    // Send the success response after following
+    res.send({ message: "Followed successfully", success: true, owner, user });
   } catch (error) {
+    // Handle any errors
     res.send({ message: error.message, success: false });
   }
 };
 
-
 const unfollow = async (req, res) => {
   try {
     const owner = await User.findOne({ email: req.user.email });
-    if (!owner) return res.send({ message: "You need to log in first", success: false });
+    if (!owner)
+      return res.send({ message: "You need to log in first", success: false });
 
+    const user = await User.findOne({ _id: req.params.id });
 
-    const user = await User.findOne({_id: req.params.id})
+    if (!owner.following.includes(user._id))
+      return res.send({
+        success: false,
+        message: "You haven't followed to do unfollow ",
+      });
 
-    if(!owner.following.includes(user._id)) return res.send({success:false, message:"You haven't followed to do unfollow "})
-
-    user.followers.pop(owner._id);
-    await user.save();
-    owner.following.pop(user._id)
-    await owner.save();
-    res.send({ message: "UnfollowedFollowed sucessfully", success: true, owner, user });
+    await User.updateOne(
+      { _id: user._id },
+      { $pull: { followers: owner._id } }
+    );
+    await User.updateOne(
+      { _id: owner._id },
+      { $pull: { following: user._id } }
+    );
+    res.send({
+      message: "UnfollowedFollowed sucessfully",
+      success: true,
+      owner,
+      user,
+    });
   } catch (error) {
     res.send({ message: error.message, success: false });
   }
@@ -163,6 +190,7 @@ const auth = {
   login,
   logout,
   follow,
+  unfollow,
 };
 
 export default auth;
