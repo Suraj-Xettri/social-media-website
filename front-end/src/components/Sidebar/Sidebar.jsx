@@ -43,25 +43,25 @@ const Sidebar = () => {
 
   const { user } = useSelector((store) => store.auth);
   return (
-    <div className="relative">
+    <div className="relative font-pregular">
       <div className="fixed top-20 z-10 left-10 w-[20vw] h-full">
         <div className="bg-zinc-100 pl-5 h-[85vh]  rounded-xl text-zinc-900 flex flex-col gap-10">
           <div className="flex flex-col gap-2 items-center pt-5">
             <div className="h-10 w-10 rounded-full flex items-center justify-center">
               <img
-                src={user?.profilePic || "/default.png"}
+                src={`/profile/${user.profilePic}`}
                 className="w-full h-full rounded-full"
                 alt=""
               />
             </div>
-            <div className="font-semibold">
-              {user?.username || "Guest Account"}
+            <div className="">
+              <p className="font-pbold">{user?.username || "Guest Account"}</p>
             </div>
           </div>
           <div className="space-y-10">
             <div className="flex cursor-pointer items-center space-x-4">
               <FaHome className="text-2xl" />
-              <span className="text-xl">Home</span>
+              <span className="text-xl font-pmedium">Home</span>
             </div>
             <div className="flex cursor-pointer items-center space-x-4">
               <FaSearch className="text-xl" />
@@ -110,7 +110,7 @@ const Sidebar = () => {
             <button
               onClick={logout}
               disabled={!user}
-              className={`w-full bg-blue-500 text-white py-2 rounded-lg ${
+              className={`w-full bg-primary text-white py-2 rounded-lg ${
                 !user ? "cursor-not-allowed opacity-50" : ""
               }`}
             >
