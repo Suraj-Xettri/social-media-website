@@ -8,6 +8,7 @@ import {
   FaBookmark,
   FaUser,
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { setAuthUser } from "../../redux/authSlice";
@@ -59,10 +60,13 @@ const Sidebar = () => {
             </div>
           </div>
           <div className="space-y-10">
-            <div className="flex cursor-pointer items-center space-x-4">
-              <FaHome className="text-2xl" />
-              <span className="text-xl font-pmedium">Home</span>
-            </div>
+            <Link to={'/Home'}>
+              <div className="flex cursor-pointer items-center space-x-4">
+                <FaHome className="text-2xl" />
+                <span className="text-xl font-pmedium">Home</span>
+              </div>
+            </Link>
+
             <div className="flex cursor-pointer items-center space-x-4">
               <FaSearch className="text-xl" />
               <span className="text-xl">Explore</span>

@@ -5,3 +5,7 @@
 .scrol::-webkit-scrollbar{
     display: none;
 }
+
+.changes::-webkit-scrollbar{
+    display: none;
+}
