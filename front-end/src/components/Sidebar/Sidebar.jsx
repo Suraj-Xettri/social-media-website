@@ -88,14 +88,14 @@ const Sidebar = () => {
               <FaBookmark className="text-xl" />
               <span className="text-xl">Bookmarks</span>
             </div>
-            <button
-              className={`flex cursor-pointer items-center space-x-4 ${
-                !user ? "cursor-not-allowed opacity-50" : ""
+            <Link to={`/profile/${user?._id}`}
+              className={`flex  items-center space-x-4 ${
+                !user ? "cursor-not-allowed opacity-50" : "cursor-pointer"
               }`}
             >
               <FaUser className="text-xl" />
               <span className="text-xl">Profile</span>
-            </button>
+            </Link>
 
             {create && <CreatePost handleCreate={handleCreate} />}
 

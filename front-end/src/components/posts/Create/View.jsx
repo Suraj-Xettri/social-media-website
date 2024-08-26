@@ -6,6 +6,7 @@ import { IoMdSend } from "react-icons/io";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { SlOptions } from "react-icons/sl";
+import { Link } from "react-router-dom";
 
 const View = () => {
   const [selectedPostId, setSelectedPostId] = useState(null);
@@ -69,14 +70,14 @@ const View = () => {
       if (response.data.success) {
         toast.success(response.data.message);
         getPosts();
-        console.log(response)
+        console.log(response);
       } else {
         toast.error(response.data.message);
-        console.log(response)
+        console.log(response);
       }
     } catch (error) {
       toast.error(error.message);
-      console.log(response)
+      console.log(response);
     }
   };
 
@@ -185,11 +186,16 @@ const View = () => {
     <div className="relative p-3">
       {posts.map((post) => (
         <div key={post._id} className="flex gap-2 w-full p-2 relative border-b">
-          <img
-            src={`/profile/${post.author.profilePicture}`}
-            alt=""
-            className="w-10 h-10 rounded-full"
-          />
+          <Link to={`/profile/${post.author._id}`}>
+            <div className="w-10 h-10">
+              <img
+                src={`/profile/${post.author.profilePicture}`}
+                alt=""
+                className="w-full h-full cursor-pointer rounded-full"
+              />
+            </div>
+          </Link>
+
           <div className="relative w-[80vw] sm:w-[80vw] flex flex-col">
             <div className="flex justify-between items-center w-full">
               <p className="text-blue-700 tracking-tighter font-medium">
@@ -197,9 +203,9 @@ const View = () => {
               </p>
 
               <SlOptions
-                onClick={() => user ? handleMenu(post._id) : ""}
+                onClick={() => (user ? handleMenu(post._id) : "")}
                 className={`${user ? "cursor-pointer" : "cursor-not-allowed"}`}
-                disabled = {!user}
+                disabled={!user}
               />
             </div>
 
@@ -218,23 +224,22 @@ const View = () => {
                   </button>
                 ) : (
                   <div className="w-full hover:bg-zinc-200 px-10 py-5">
-                  {user?.following?.includes(post?.author?._id) ? (
-                    <button
-                      onClick={() => unfollow(post?.author?._id)}
-                      className="cursor-pointer w-full"
-                    >
-                      Unfollow
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => follow(post?.author?._id)}
-                      className="w-full cursor-pointer"
-                    >
-                      Follow
-                    </button>
-                  )}
-                </div>
-                
+                    {user?.following?.includes(post?.author?._id) ? (
+                      <button
+                        onClick={() => unfollow(post?.author?._id)}
+                        className="cursor-pointer w-full"
+                      >
+                        Unfollow
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => follow(post?.author?._id)}
+                        className="w-full cursor-pointer"
+                      >
+                        Follow
+                      </button>
+                    )}
+                  </div>
                 )}
 
                 <IoMdClose
