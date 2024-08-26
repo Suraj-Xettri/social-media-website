@@ -49,7 +49,7 @@ const Sidebar = () => {
           <div className="flex flex-col gap-2 items-center pt-5">
             <div className="h-10 w-10 rounded-full flex items-center justify-center">
               <img
-                src={`/profile/${user.profilePic}`}
+                src={`/profile/${user?.profilePic || "default.png"}`}
                 className="w-full h-full rounded-full"
                 alt=""
               />

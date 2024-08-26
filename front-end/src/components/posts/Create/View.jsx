@@ -67,7 +67,7 @@ const View = () => {
         }
       );
       if (response.data.success) {
-        toast.success(response.data.success);
+        toast.success(response.data.message);
         getPosts();
         console.log(response)
       } else {
@@ -90,10 +90,10 @@ const View = () => {
         }
       );
       if (response.data.success) {
-        toast.success(response.success);
+        toast.success(response.data.message);
         getPosts();
       } else {
-        toast.error(response.message);
+        toast.error(response.data.message);
       }
     } catch (error) {
       toast.error(error.message);
@@ -217,23 +217,24 @@ const View = () => {
                     Delete
                   </button>
                 ) : (
-                  <div className="w-full hover:bg-zinc-200  px-10 py-5">
-                    {user?.following?.includes(post?.author?._id) ? (
-                      <button
-                        onClick={() => unfollow(user?._id)}
-                        className="cursor-pointer w-full"
-                      >
-                        Unfollow
-                      </button>
-                    ) : (
-                      <button
-                        onClick={() => follow(user?._id)}
-                        className="w-full cursor-pointer"
-                      >
-                        Follow
-                      </button>
-                    )}
-                  </div>
+                  <div className="w-full hover:bg-zinc-200 px-10 py-5">
+                  {user?.following?.includes(post?.author?._id) ? (
+                    <button
+                      onClick={() => unfollow(post?.author?._id)}
+                      className="cursor-pointer w-full"
+                    >
+                      Unfollow
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => follow(post?.author?._id)}
+                      className="w-full cursor-pointer"
+                    >
+                      Follow
+                    </button>
+                  )}
+                </div>
+                
                 )}
 
                 <IoMdClose

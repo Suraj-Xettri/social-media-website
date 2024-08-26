@@ -23,10 +23,10 @@ const Nav = () => {
             <Link to={"/home"}>AnimePlex</Link>
           </p>
         </div>
-        <div className="text-black flex pr-2 gap-3 lg:gap-8 items-center">
+        <div className="text-primary flex pr-2 gap-3 lg:gap-8 items-center">
           {!isLogged && (
-            <button className="bg-red-600 px-5 py-1 md:px-4 md:py-2 rounded-xl font-semibold hover:bg-red-500 transition duration-300 ease-out">
-              <Link to={"/login"}>login</Link>
+            <button className="bg-secondary-200 px-5 py-1 md:px-14 md:py-3 rounded-xl font-semibold hover:bg-secondary transition duration-300 ease-out">
+              <Link to={"/login"}>Login</Link>
             </button>
           )}
           <TfiMenu className="lg:hidden text-3xl text-black md:text-4xl cursor-pointer" />
