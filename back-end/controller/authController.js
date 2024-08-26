@@ -185,12 +185,23 @@ const unfollow = async (req, res) => {
   }
 };
 
+const profile = async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.params.id }).populate("post");
+    if (!user) return res.send({ success: false, message: "Cannot find user" });
+    res.send({ user, success: true, message: "Profile Succesfull" });
+  } catch (error) {
+    res.send({ success: false, message: error });
+  }
+};
+
 const auth = {
   registerUser,
   login,
   logout,
   follow,
   unfollow,
+  profile,
 };
 
 export default auth;
