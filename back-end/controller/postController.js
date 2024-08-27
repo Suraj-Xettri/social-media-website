@@ -11,7 +11,7 @@ const posts = async (req, res) => {
     } else {
       // If the user is not logged in, show all posts
       posts = await Post.find()
-        .populate("author", " _id username profilePicture")
+        .populate("author", " _id username profilePicture followers following")
         .populate("comments", "content");
     }
 

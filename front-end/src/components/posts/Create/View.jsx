@@ -30,14 +30,14 @@ const View = () => {
   };
 
   const getPosts = async () => {
-    const posts = await axios.get("http://localhost:3000/posts");
-    setPosts(posts.data);
+    try {
+      const posts = await axios.get("http://localhost:3000/posts");
+      setPosts(posts.data);
+    } catch (error) {
+      toast.error("Failed to fetch posts. Please try again.");
+    }
   };
-
-  useEffect(() => {
-    getPosts();
-  }, []); // Added dependency array to avoid infinite loop
-
+   
   const like = async (post_id) => {
     try {
       const response = await axios.post(
@@ -63,36 +63,56 @@ const View = () => {
       const response = await axios.post(
         `http://localhost:3000/users/follow/${user_id}`,
         {},
-        {
-          withCredentials: true,
-        }
+        { withCredentials: true }
       );
       if (response.data.success) {
         toast.success(response.data.message);
-        getPosts();
-        console.log(response);
+        setPosts((prevPosts) =>
+          prevPosts.map((post) =>
+            post.author._id === user_id
+              ? {
+                  ...post,
+                  author: {
+                    ...post.author,
+                    followed: [...(post.author.followed || []), user_id], // Ensure followed array exists
+                  },
+                }
+              : post
+          )
+         
+        ); 
       } else {
         toast.error(response.data.message);
-        console.log(response);
       }
     } catch (error) {
       toast.error(error.message);
-      console.log(response);
     }
   };
-
+  
   const unfollow = async (user_id) => {
     try {
       const response = await axios.post(
         `http://localhost:3000/users/unfollow/${user_id}`,
         {},
-        {
-          withCredentials: true,
-        }
+        { withCredentials: true }
       );
       if (response.data.success) {
         toast.success(response.data.message);
-        getPosts();
+        setPosts((prevPosts) =>
+          prevPosts.map((post) =>
+            post.author._id === user_id
+              ? {
+                  ...post,
+                  author: {
+                    ...post.author,
+                    followed: (post.author.followed || []).filter(
+                      (id) => id !== user_id
+                    ),
+                  },
+                }
+              : post
+          )
+        );
       } else {
         toast.error(response.data.message);
       }
@@ -100,7 +120,7 @@ const View = () => {
       toast.error(error.message);
     }
   };
-
+  
   const Delete = async (post_id) => {
     try {
       const response = await axios.post(
@@ -182,6 +202,10 @@ const View = () => {
     }
   };
 
+  useEffect(() => {
+    getPosts();
+  }, []); // Added dependency array to avoid infinite loop
+
   return (
     <div className="relative p-3">
       {posts.map((post) => (
@@ -224,7 +248,7 @@ const View = () => {
                   </button>
                 ) : (
                   <div className="w-full hover:bg-zinc-200 px-10 py-5">
-                    {user?.following?.includes(post?.author?._id) ? (
+                    {post?.author?.followers?.includes(user?._id) ? (
                       <button
                         onClick={() => unfollow(post?.author?._id)}
                         className="cursor-pointer w-full"
