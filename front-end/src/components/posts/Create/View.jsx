@@ -11,7 +11,6 @@ import { Link } from "react-router-dom";
 const View = () => {
   const [selectedPostId, setSelectedPostId] = useState(null);
   const [postID, setPostID] = useState(null); // Updated state
-
   // Updated state
   const [posts, setPosts] = useState([]);
   const { user } = useSelector((store) => store.auth);
@@ -24,11 +23,9 @@ const View = () => {
   const setContents = (e) => {
     setContent(e.target.value);
   };
-
   const handleComment = (postId) => {
     setSelectedPostId((prevId) => (prevId === postId ? null : postId));
   };
-
   const getPosts = async () => {
     try {
       const posts = await axios.get("http://localhost:3000/posts");
@@ -37,7 +34,6 @@ const View = () => {
       toast.error("Failed to fetch posts. Please try again.");
     }
   };
-   
   const like = async (post_id) => {
     try {
       const response = await axios.post(
@@ -57,7 +53,6 @@ const View = () => {
       toast.error(error.message);
     }
   };
-
   const follow = async (user_id) => {
     try {
       const response = await axios.post(
@@ -74,7 +69,6 @@ const View = () => {
       toast.error(error.message);
     }
   };
-  
   const unfollow = async (user_id) => {
     try {
       const response = await axios.post(
@@ -91,7 +85,6 @@ const View = () => {
       toast.error(error.message);
     }
   };
-  
   const Delete = async (post_id) => {
     try {
       const response = await axios.post(
@@ -112,7 +105,6 @@ const View = () => {
       toast.error(error.message);
     }
   };
-
   const disLike = async (post_id) => {
     try {
       const response = await axios.post(
@@ -132,7 +124,6 @@ const View = () => {
       toast.error(error.message);
     }
   };
-
   const commentForm = async (post_id, e) => {
     e.preventDefault();
     try {
@@ -158,7 +149,6 @@ const View = () => {
       toast.error(error.message);
     }
   };
-
   const getComments = async (postId) => {
     handleComment(postId);
     if (selectedPostId !== postId) {
@@ -172,10 +162,10 @@ const View = () => {
       }
     }
   };
-
   useEffect(() => {
     getPosts();
   }, [follow, unfollow]); // Added dependency array to avoid infinite loop
+
 
   return (
     <div className="relative p-3">
