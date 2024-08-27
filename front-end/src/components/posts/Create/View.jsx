@@ -17,6 +17,7 @@ const View = () => {
   const [content, setContent] = useState("");
   const [comment, setComment] = useState([]);
 
+
   const handleMenu = (postId) => {
     setPostID((prevId) => (prevId === postId ? null : postId));
   };
@@ -165,7 +166,6 @@ const View = () => {
   useEffect(() => {
     getPosts();
   }, [follow, unfollow]); // Added dependency array to avoid infinite loop
-
 
   return (
     <div className="relative p-3">
