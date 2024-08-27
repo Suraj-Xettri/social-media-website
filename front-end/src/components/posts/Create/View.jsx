@@ -66,21 +66,7 @@ const View = () => {
         { withCredentials: true }
       );
       if (response.data.success) {
-        toast.success(response.data.message);
-        setPosts((prevPosts) =>
-          prevPosts.map((post) =>
-            post.author._id === user_id
-              ? {
-                  ...post,
-                  author: {
-                    ...post.author,
-                    followed: [...(post.author.followed || []), user_id], // Ensure followed array exists
-                  },
-                }
-              : post
-          )
-         
-        ); 
+        toast.success(response.data.message); 
       } else {
         toast.error(response.data.message);
       }
@@ -98,21 +84,6 @@ const View = () => {
       );
       if (response.data.success) {
         toast.success(response.data.message);
-        setPosts((prevPosts) =>
-          prevPosts.map((post) =>
-            post.author._id === user_id
-              ? {
-                  ...post,
-                  author: {
-                    ...post.author,
-                    followed: (post.author.followed || []).filter(
-                      (id) => id !== user_id
-                    ),
-                  },
-                }
-              : post
-          )
-        );
       } else {
         toast.error(response.data.message);
       }
@@ -204,7 +175,7 @@ const View = () => {
 
   useEffect(() => {
     getPosts();
-  }, []); // Added dependency array to avoid infinite loop
+  }, [follow, unfollow]); // Added dependency array to avoid infinite loop
 
   return (
     <div className="relative p-3">
