@@ -55,7 +55,7 @@ export const Login = () => {
   return (
     <div className="fixed z-20 backdrop-blur-[4px] gap-24 w-screen items-center justify-center h-screen flex">
       <div className="absolute inset-0 bg-zinc-900 bg-opacity-70 backdrop-blur-sm"></div>
-      <div className="flex relative flex-col px-24 py-8 gap-2 rounded-[50px] bg-zinc-100">
+      <div className="flex relative flex-col px-20 py-8 gap-2 rounded-[50px] bg-zinc-100">
         <div className="absolute w-10 h-10 right-2 top-5 hover:bg-zinc-200 transition  flex items-center justify-center rounded-full">
           <Link to="/home">
             <IoClose className="text-3xl cursor-pointer" />
