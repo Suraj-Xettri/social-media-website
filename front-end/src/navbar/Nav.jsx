@@ -45,7 +45,7 @@ const Nav = () => {
         <Sidebar />
       </div>
       {menu &&
-        <div>
+        <div className="lg:hidden">
           <ResponsiveBar handleMenu = {handleMenu} />
         </div>
       }
