@@ -100,6 +100,7 @@ const comments = async (req, res) => {
   res.send({ success: true, message: "Success", comments });
 };
 
+
 const postControl = {
   like,
   dislike,

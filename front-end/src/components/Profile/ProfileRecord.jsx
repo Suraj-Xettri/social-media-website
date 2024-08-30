@@ -1,37 +1,49 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { HiOutlineArrowLeft } from "react-icons/hi";
+import {Link} from "react-router-dom"
 
 const ProfileRecord = ({ id }) => {
   const [activeTab, setActiveTab] = useState(true); // Default to showing posts
   const [profileUser, setProfileUser] = useState({});
-  const[loading, setLoding] = useState(false)
+  const [loading, setLoding] = useState(false);
   const profileDetails = async () => {
-    setLoding(true)
+    setLoding(true);
     try {
       const response = await axios.get(
         `http://localhost:3000/users/profile/${id}`
       );
-      setLoding(false)
+      
       setProfileUser(response?.data?.user);
+      setLoding(false);
     } catch (error) {
-      setLoding(false)
+      setLoding(false);
       console.error("Error fetching profile details:", error);
     }
   };
 
   console.log(profileUser)
 
-  console.log(profileUser?.post)
   useEffect(() => {
     profileDetails();
   }, []);
 
-  
-  if(loading) return <div className="flex text-4xl justify-center items-center">Loading</div>
-  if (!profileUser) return <div className="flex justify-center items-center w-full">No User found.</div>
+  if (loading)
+    return (
+      <div className="flex text-4xl justify-center items-center">Loading</div>
+    );
+  if (!profileUser)
+    return (
+      <div className="flex justify-center items-center w-full">
+        No User found.
+      </div>
+    );
   return (
     <div className="changes p-10 rounded-2xl flex-[2] bg-zinc-100 backdrop-blur overflow-y-scroll overflow-x-hidden relative">
       {/* Profile Header */}
+      <Link to={'/home'}>
+        <HiOutlineArrowLeft className="absolute text-xl lg:hidden cursor-pointer" />
+      </Link>
       <div className="flex flex-col space-y-10 items-center justify-between mb-6">
         <div className="flex flex-col items-center justify-center space-y-2">
           <img
@@ -78,19 +90,17 @@ const ProfileRecord = ({ id }) => {
       </div>
 
       {/* Posts Grid */}
-      {activeTab ? 
-      <div className="grid grid-cols-3 gap-4">
-       {/* {profileUser.post.map((post)=>(
+      {activeTab ? (
+        <div className="grid grid-cols-3 gap-4">
+          {/* {profileUser.post.map((post)=>(
         <div key={post._id}>
           dd
         </div>
        ))} */}
-      </div> 
-      :
-       <div>
-        
-        saved
-        </div>}
+        </div>
+      ) : (
+        <div>saved</div>
+      )}
     </div>
   );
 };
