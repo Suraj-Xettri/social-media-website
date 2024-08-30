@@ -3,9 +3,15 @@ import { TfiMenu } from "react-icons/tfi";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Sidebar from "../components/Sidebar/Sidebar";
+import ResponsiveBar from "../components/Sidebar/ResponsiveBar";
 const Nav = () => {
   const [isLogged, setIsLoggedin] = useState(false);
- 
+  const [menu, setMenu] = useState(false);
+
+  const handleMenu = () => {
+    setMenu((p) => !p);
+  };
+
   const { user } = useSelector((store) => store.auth);
   useEffect(() => {
     if (user) {
@@ -29,12 +35,20 @@ const Nav = () => {
               <Link to={"/login"}>Login</Link>
             </button>
           )}
-          <TfiMenu className="lg:hidden text-3xl text-black md:text-4xl cursor-pointer" />
+          <TfiMenu
+            onClick={handleMenu}
+            className="lg:hidden text-3xl text-black md:text-4xl cursor-pointer"
+          />
         </div>
       </div>
       <div className="hidden lg:block">
-          <Sidebar />
+        <Sidebar />
       </div>
+      {menu &&
+        <div>
+          <ResponsiveBar handleMenu = {handleMenu} />
+        </div>
+      }
     </div>
   );
 };
