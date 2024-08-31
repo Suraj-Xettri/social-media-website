@@ -96,9 +96,9 @@ const ProfileRecord = ({ id }) => {
 
       {/* Posts Grid */}
       {activeTab ? (
-         <div className="flex flex-wrap justify-around gap-4">
+         <div className="flex flex-wrap  gap-4">
          {profileUser?.post?.map((post, index) => (
-           <div key={index} className="w-[200px] h-[300px] rounded-xl">
+           <div key={index} className="w-[210px] h-[300px] rounded-xl">
              <img
                src={`/posts/${post.image}`}
                alt={`Post ${index + 1}`}
