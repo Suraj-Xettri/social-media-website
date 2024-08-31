@@ -17,28 +17,32 @@ const UserSchema = new Schema({
   },
   profilePicture: {
     type: String,
-    default:'default.png'
+    default: "default.png",
   },
   createdAt: {
     type: Date,
     default: Date.now,
-  },  
-  post: [{
-    type: Schema.Types.ObjectId,
-    ref: "Post",
-  }],
+  },
+  post: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Post",
+    },
+  ],
 
-  followers:[{
-    type: Schema.Types.ObjectId,
-    ref: "User"
-  }],
+  followers: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
 
-  following:[{
-    type: Schema.Types.ObjectId,
-    ref: "User"
-  }]
-  
-
+  following: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
 });
 const User = mongoose.model("User", UserSchema);
 export default User;

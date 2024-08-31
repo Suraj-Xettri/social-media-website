@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { HiOutlineArrowLeft } from "react-icons/hi";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 
 const ProfileRecord = ({ id }) => {
   const [activeTab, setActiveTab] = useState(true); // Default to showing posts
@@ -13,7 +13,7 @@ const ProfileRecord = ({ id }) => {
       const response = await axios.get(
         `http://localhost:3000/users/profile/${id}`
       );
-      
+
       setProfileUser(response?.data?.user);
       setLoding(false);
     } catch (error) {
@@ -22,11 +22,16 @@ const ProfileRecord = ({ id }) => {
     }
   };
 
-  console.log(profileUser)
+  profileUser?.post?.map((post, index) => (
+    console.log(post)
+  ))
+
+    
+  
 
   useEffect(() => {
     profileDetails();
-  }, []);
+  }, [id]);
 
   if (loading)
     return (
@@ -41,7 +46,7 @@ const ProfileRecord = ({ id }) => {
   return (
     <div className="changes p-10 rounded-2xl flex-[2] bg-zinc-100 backdrop-blur overflow-y-scroll overflow-x-hidden relative">
       {/* Profile Header */}
-      <Link to={'/home'}>
+      <Link to={"/home"}>
         <HiOutlineArrowLeft className="absolute text-xl lg:hidden cursor-pointer" />
       </Link>
       <div className="flex flex-col space-y-10 items-center justify-between mb-6">
@@ -91,13 +96,17 @@ const ProfileRecord = ({ id }) => {
 
       {/* Posts Grid */}
       {activeTab ? (
-        <div className="grid grid-cols-3 gap-4">
-          {/* {profileUser.post.map((post)=>(
-        <div key={post._id}>
-          dd
-        </div>
-       ))} */}
-        </div>
+         <div className="flex flex-wrap justify-around gap-4">
+         {profileUser?.post?.map((post, index) => (
+           <div key={index} className="w-[200px] h-[300px] rounded-xl">
+             <img
+               src={`/posts/${post.image}`}
+               alt={`Post ${index + 1}`}
+               className="object-cover w-full h-full rounded-xl opacity-80"
+             />
+           </div>
+         ))}
+       </div>
       ) : (
         <div>saved</div>
       )}
