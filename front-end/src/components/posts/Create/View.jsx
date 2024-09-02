@@ -183,13 +183,13 @@ const View = () => {
 
           <div className="relative w-[80vw] sm:w-[80vw] flex flex-col">
             <div className="flex justify-between items-center w-full">
-              <p className="text-blue-700 tracking-tighter font-medium">
+              <p className="text-[#FFBADE] tracking-tighter font-medium">
                 @{post.author.username}
               </p>
 
               <SlOptions
                 onClick={() => (user ? handleMenu(post._id) : "")}
-                className={`${user ? "cursor-pointer" : "cursor-not-allowed"}`}
+                className={`${user ? "cursor-pointer" : "cursor-not-allowed"} text-white`}
                 disabled={!user}
               />
             </div>
@@ -234,8 +234,8 @@ const View = () => {
               </div>
             )}
 
-            <p className="w-full text-sm text-zinc-600">
-              <span className="font-bold text-zinc-800">{post.title}</span>:{" "}
+            <p className="w-full text-sm text-zinc-200">
+              <span className="font-bold text-zinc-200">{post.title}</span>:{" "}
               {post.content}
             </p>
 
@@ -248,7 +248,7 @@ const View = () => {
                 />
               </div>
             )}
-            <div className="text-zinc-500 p-3 w-[300px] flex gap-4 text-xl">
+            <div className="text-zinc-300 p-3 w-[300px] flex gap-4 text-xl">
               <div className="flex cursor-pointer items-center justify-center gap-1">
                 {post.likes.includes(user?._id) ? (
                   <button
@@ -275,7 +275,7 @@ const View = () => {
                 className="flex cursor-pointer items-center justify-center gap-1"
               >
                 <FaRegComment />
-                <p className="text-sm font-normal text-zinc-600 ">
+                <p className="text-sm font-normal text-zinc-200 ">
                   {post.comments.length}
                 </p>
               </div>

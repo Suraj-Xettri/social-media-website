@@ -44,7 +44,7 @@ const ProfileRecord = ({ id }) => {
       </div>
     );
   return (
-    <div className="changes p-10 rounded-2xl flex-[2] bg-zinc-100 backdrop-blur overflow-y-scroll overflow-x-hidden relative">
+    <div className="changes p-10 rounded-2xl flex-[2] bg-[#2B2A3C] text-white backdrop-blur overflow-y-scroll overflow-x-hidden relative">
       {/* Profile Header */}
       <Link to={"/home"}>
         <HiOutlineArrowLeft className="absolute text-xl lg:hidden cursor-pointer" />
@@ -65,15 +65,15 @@ const ProfileRecord = ({ id }) => {
             <p className="font-semibold">
               {profileUser.post ? profileUser?.post?.length : 0}
             </p>
-            <p className="text-gray-600">Posts</p>
+            <p className="text-[#FFBADE]">Posts</p>
           </div>
           <div className="text-center">
             <p className="font-semibold">{profileUser?.followers?.length}</p>
-            <p className="text-gray-600">Followers</p>
+            <p className="text-[#FFBADE]">Followers</p>
           </div>
           <div className="text-center">
             <p className="font-semibold">{profileUser?.following?.length}</p>
-            <p className="text-gray-600">Following</p>
+            <p className="text-[#FFBADE]">Following</p>
           </div>
         </div>
       </div>

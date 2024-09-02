@@ -46,13 +46,12 @@ const ResponsiveBar = ({ handleMenu }) => {
   const { user } = useSelector((store) => store.auth);
   return (
     <div className="fixed z-20 backdrop-blur-[4px] gap-24 w-screen items-center justify-center h-screen flex">
-      {" "}
       <div className="absolute inset-0 bg-zinc-900 bg-opacity-70 backdrop-blur-sm"></div>
       <div className="fixed top-1 z-30 right-0 w-[260px] h-full">
-        <div className="bg-zinc-200 pl-5 h-[100vh] rounded-sm text-zinc-900 flex flex-col gap-10">
+        <div className="bg-[#2B2A3C] pl-5 h-[100vh] rounded-sm text-white flex flex-col gap-10">
           <GiCrossedSabres
             onClick={handleMenu}
-            className="absolute cursor-pointer hover:bg-zinc-300 rounded-br-xl transition duration-200 ease-out left-0 p-2 text-5xl"
+            className="absolute cursor-pointer hover:opacity-50 rounded-br-xl transition duration-200 ease-out left-0 p-2 text-5xl"
           />
           <div className="flex flex-col gap-2 items-center pt-[60px]">
             <div className="h-10 w-10 rounded-full flex items-center justify-center">
@@ -122,7 +121,7 @@ const ResponsiveBar = ({ handleMenu }) => {
             <button
               onClick={logout}
               disabled={!user}
-              className={`w-full bg-primary text-white py-2 rounded-lg ${
+              className={`w-full bg-red-500 text-white py-2 rounded-lg ${
                 !user ? "cursor-not-allowed opacity-50" : ""
               }`}
             >

@@ -9,7 +9,7 @@ import Notification from "./components/notification/Notification";
 function App() {
   
   return (
-    <div className="relative w-screen bg-white">
+    <div className="relative w-screen bg-[#201F31]">
       <Router>
         <Nav />
         <Routes>

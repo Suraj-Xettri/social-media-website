@@ -8,7 +8,7 @@ const Create = () => {
   const {user} = useSelector(store => store.auth)
 
   return (
-    <div className="changes rounded-2xl flex-[2] bg-zinc-100 backdrop-blur overflow-y-scroll overflow-x-hidden relative">
+    <div className="changes rounded-2xl flex-[2] bg-[#2B2A3C] backdrop-blur overflow-y-scroll overflow-x-hidden relative">
       {user && <CreatePost />}
       <View />
     </div>

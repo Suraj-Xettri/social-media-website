@@ -46,7 +46,7 @@ const Sidebar = () => {
   return (
     <div className="relative font-pregular">
       <div className="fixed top-20 z-10 left-10 w-[20vw] h-full">
-        <div className="bg-zinc-100 pl-5 h-[85vh]  rounded-xl text-zinc-900 flex flex-col gap-10">
+        <div className="bg-[#2B2A3C] pl-5 h-[85vh]  rounded-xl text-white flex flex-col gap-10">
           <div className="flex flex-col gap-2 items-center pt-5">
             <div className="h-10 w-10 rounded-full flex items-center justify-center">
               <img
@@ -114,7 +114,7 @@ const Sidebar = () => {
             <button
               onClick={logout}
               disabled={!user}
-              className={`w-full bg-primary text-white py-2 rounded-lg ${
+              className={`w-full bg-red-500 text-primary py-2 rounded-lg ${
                 !user ? "cursor-not-allowed opacity-50" : ""
               }`}
             >
