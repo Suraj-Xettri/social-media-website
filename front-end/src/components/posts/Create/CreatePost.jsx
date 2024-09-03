@@ -43,7 +43,7 @@ const CreatePost = () => {
         <Link to={`/profile/${user._id}`}>
           <div className="w-5 h-5 sm:w-12 sm:h-12">
             <img
-              src={`/profile/${user.profilePic}`}
+              src={`${user.profilePic}`}
               alt=""
               className="w-full h-full rounded-full"
             />

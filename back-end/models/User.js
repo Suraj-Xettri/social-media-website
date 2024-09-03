@@ -16,8 +16,7 @@ const UserSchema = new Schema({
     required: true,
   },
   profilePicture: {
-    type: String,
-    default: "default.png",
+    type: Buffer
   },
   createdAt: {
     type: Date,

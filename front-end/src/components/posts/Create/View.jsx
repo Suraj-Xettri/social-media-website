@@ -17,7 +17,6 @@ const View = () => {
   const [content, setContent] = useState("");
   const [comment, setComment] = useState([]);
 
-
   const handleMenu = (postId) => {
     setPostID((prevId) => (prevId === postId ? null : postId));
   };
@@ -62,7 +61,7 @@ const View = () => {
         { withCredentials: true }
       );
       if (response.data.success) {
-        toast.success(response.data.message); 
+        toast.success(response.data.message);
       } else {
         toast.error(response.data.message);
       }
@@ -174,7 +173,7 @@ const View = () => {
           <Link to={`/profile/${post.author._id}`}>
             <div className="w-10 h-10">
               <img
-                src={`/profile/${post.author.profilePicture}`}
+                src={`${(post.author.profilePicture)}`}
                 alt=""
                 className="w-full h-full cursor-pointer rounded-full"
               />
@@ -189,7 +188,9 @@ const View = () => {
 
               <SlOptions
                 onClick={() => (user ? handleMenu(post._id) : "")}
-                className={`${user ? "cursor-pointer" : "cursor-not-allowed"} text-white`}
+                className={`${
+                  user ? "cursor-pointer" : "cursor-not-allowed"
+                } text-white`}
                 disabled={!user}
               />
             </div>
@@ -242,7 +243,7 @@ const View = () => {
             {post.image && (
               <div className="w-[90%] mt-2 max-w-[500px] min-h-[200px] h-[300px] max-[350px] rounded-3xl bg-gray-500">
                 <img
-                  src={`/posts/${post.image}`}
+                  src={`${post.image}`}
                   alt=""
                   className="w-full h-full object-cover rounded-2xl"
                 />

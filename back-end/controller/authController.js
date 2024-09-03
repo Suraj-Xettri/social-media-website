@@ -6,7 +6,9 @@ const registerUser = async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
-    const profilePicture = req.file ? req.file.filename : "default.jpg"; // Replace "default.jpg" with your actual default image path
+    const profilePicture = req.file ? req.file.buffer : null; // Replace "default.jpg" with your actual default image path
+
+  
 
     let existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -21,7 +23,8 @@ const registerUser = async (req, res) => {
           success: false,
           message: "Something went wrong while registere",
         });
-      //66c8267a2ba6c987172f7a58
+
+
       const user = await User.create({
         username,
         email,
@@ -29,11 +32,16 @@ const registerUser = async (req, res) => {
         password: hash,
       });
 
+      let profilePictureBase64 = null;
+      if (user.profilePicture) {
+        profilePictureBase64 = `data:image/png;base64,${user.profilePicture.toString('base64')}`;
+      }
+
       const activeUser = {
         _id: user._id,
         username: user.username,
         email: user.email,
-        profilePic: user.profilePicture,
+        profilePic: profilePictureBase64,
         post: user.post,
         followers: user.followers,
         following: user.following,
@@ -80,11 +88,15 @@ const login = async (req, res) => {
 
       let token = generateToken(existingUser);
 
+      let profilePictureBase64 = null;
+      if (existingUser.profilePicture) {
+        profilePictureBase64 = `data:image/png;base64,${existingUser.profilePicture.toString('base64')}`;
+      }
       const activeUser = {
         _id: existingUser._id,
         username: existingUser.username,
         email: existingUser.email,
-        profilePic: existingUser.profilePicture,
+        profilePic: profilePictureBase64,
         post: existingUser.post,
         followers: existingUser.followers,
         following: existingUser.following,
@@ -95,13 +107,14 @@ const login = async (req, res) => {
           sameSite: "strict",
           maxAge: 1 * 24 * 60 * 60 * 1000,
         })
+
         .json({
           success: true,
           message: `welcome ${existingUser.username}`,
           activeUser,
         });
 
-      console.log(process.env.CITY);
+
     });
   } catch (error) {
     res.status(500).send("Server error");
@@ -190,7 +203,22 @@ const profile = async (req, res) => {
     const user = await User.findOne({ _id: req.params.id }).populate("post");
 
     if (!user) return res.send({ success: false, message: "Cannot find user" });
-    res.send({ user, success: true, message: "Profile Succesfull"});
+
+    let profilePictureBase64 = null;
+    if (user.profilePicture) {
+      profilePictureBase64 = `data:image/png;base64,${user.profilePicture.toString('base64')}`;
+    }
+
+    const userProfile = {
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+      profilePic: profilePictureBase64,
+      post: user.post,
+      followers: user.followers,
+      following: user.following,
+    };
+    res.send({ userProfile, success: true, message: "Profile Succesfull"});
   } catch (error) {
     res.send({ success: false, message: error });
   }

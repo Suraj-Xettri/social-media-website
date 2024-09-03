@@ -14,7 +14,7 @@ const ProfileRecord = ({ id }) => {
         `http://localhost:3000/users/profile/${id}`
       );
 
-      setProfileUser(response?.data?.user);
+      setProfileUser(response?.data?.userProfile);
       setLoding(false);
     } catch (error) {
       setLoding(false);
@@ -22,12 +22,6 @@ const ProfileRecord = ({ id }) => {
     }
   };
 
-  profileUser?.post?.map((post, index) => (
-    console.log(post)
-  ))
-
-    
-  
 
   useEffect(() => {
     profileDetails();
@@ -52,7 +46,7 @@ const ProfileRecord = ({ id }) => {
       <div className="flex flex-col space-y-10 items-center justify-between mb-6">
         <div className="flex flex-col items-center justify-center space-y-2">
           <img
-            src={`/profile/${profileUser?.profilePicture}`}
+            src={`${profileUser?.profilePic}`}
             alt={profileUser?.username}
             className="w-24 h-24 rounded-full"
           />
@@ -68,11 +62,15 @@ const ProfileRecord = ({ id }) => {
             <p className="text-[#FFBADE]">Posts</p>
           </div>
           <div className="text-center">
-            <p className="font-semibold">{profileUser?.followers?.length || 0}</p>
+            <p className="font-semibold">
+              {profileUser?.followers?.length || 0}
+            </p>
             <p className="text-[#FFBADE]">Followers</p>
           </div>
           <div className="text-center">
-            <p className="font-semibold">{profileUser?.following?.length || 0}</p>
+            <p className="font-semibold">
+              {profileUser?.following?.length || 0}
+            </p>
             <p className="text-[#FFBADE]">Following</p>
           </div>
         </div>
@@ -96,17 +94,17 @@ const ProfileRecord = ({ id }) => {
 
       {/* Posts Grid */}
       {activeTab ? (
-         <div className="flex flex-wrap  gap-4">
-         {profileUser?.post?.map((post, index) => (
-           <div key={index} className="w-[210px] h-[300px] rounded-xl">
-             <img
-               src={`/posts/${post.image}`}
-               alt={`Post ${index + 1}`}
-               className="object-cover w-full h-full rounded-xl opacity-80"
-             />
-           </div>
-         ))}
-       </div>
+        <div className="flex flex-wrap  gap-4">
+          {profileUser?.post?.map((post, index) => (
+            <div key={index} className="w-[210px] h-[300px] rounded-xl">
+              <img
+                src={`/posts/${post.image}`}
+                alt={`Post ${index + 1}`}
+                className="object-cover w-full h-full rounded-xl opacity-80"
+              />
+            </div>
+          ))}
+        </div>
       ) : (
         <div>saved</div>
       )}

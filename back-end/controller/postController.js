@@ -14,8 +14,15 @@ const posts = async (req, res) => {
         .populate("author", " _id username profilePicture followers following")
         .populate("comments", "content");
     }
-
-    res.status(200).json(posts);
+    const postsWithImages = posts.map((post) => {
+      if (post.image) {
+        const imageBase64 = post.image.toString("base64");
+        const imageData = `data:image/png;base64,${imageBase64}`; // Assuming the image is PNG
+        return { ...post.toObject(), image: imageData };
+      }
+      return post;
+    });
+    res.status(200).send(postsWithImages);
   } catch (error) {
     console.error("Error fetching posts:", error);
     res.status(500).json({ error: "Server error" });
@@ -25,7 +32,7 @@ const posts = async (req, res) => {
 const createPost = async (req, res) => {
   try {
     const { content, title } = req.body;
-    const image = req.file ? req.file.filename : ""
+    const image = req.file ? req.file.buffer : null;
     const user = await User.findOne({ email: req.user.email });
 
     const post = await Post.create({
@@ -99,7 +106,6 @@ const comments = async (req, res) => {
 
   res.send({ success: true, message: "Success", comments });
 };
-
 
 const postControl = {
   like,
