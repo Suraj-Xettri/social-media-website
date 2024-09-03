@@ -80,14 +80,14 @@ const Sidebar = () => {
               <span className="text-xl">Notifications</span>
             </div>
 
-            <div
+            <Link to={`/bookmark/${user?._id}`}
               className={`flex cursor-pointer items-center space-x-4 ${
                 !user ? "cursor-not-allowed opacity-50" : ""
               }`}
             >
               <FaBookmark className="text-xl" />
               <span className="text-xl">Bookmarks</span>
-            </div>
+            </Link>
             <Link to={`/profile/${user?._id}`}
               className={`flex  items-center space-x-4 ${
                 !user ? "cursor-not-allowed opacity-50" : "cursor-pointer"

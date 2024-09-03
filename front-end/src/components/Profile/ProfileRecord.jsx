@@ -39,7 +39,7 @@ const ProfileRecord = ({ id }) => {
     );
   if (!profileUser)
     return (
-      <div className="flex justify-center items-center w-full">
+      <div className="flex text-white text-[4vw] justify-center items-center w-full">
         No User found.
       </div>
     );
@@ -68,11 +68,11 @@ const ProfileRecord = ({ id }) => {
             <p className="text-[#FFBADE]">Posts</p>
           </div>
           <div className="text-center">
-            <p className="font-semibold">{profileUser?.followers?.length}</p>
+            <p className="font-semibold">{profileUser?.followers?.length || 0}</p>
             <p className="text-[#FFBADE]">Followers</p>
           </div>
           <div className="text-center">
-            <p className="font-semibold">{profileUser?.following?.length}</p>
+            <p className="font-semibold">{profileUser?.following?.length || 0}</p>
             <p className="text-[#FFBADE]">Following</p>
           </div>
         </div>

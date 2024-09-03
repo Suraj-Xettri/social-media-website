@@ -4,6 +4,7 @@ import Home from "./components/home/Home";
 import Nav from "./navbar/Nav";
 import Post from "./components/posts/Post";
 import Profile from "./components/Profile/Profile";
+import Bookmark from "./components/bookmark/Bookmark";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Notification from "./components/notification/Notification";
 function App() {
@@ -18,6 +19,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/home" element={<Post />} />
           <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/bookmark/:id" element={<Bookmark/>} />
+
         </Routes>
         <Notification />
       </Router>
