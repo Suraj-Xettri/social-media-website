@@ -67,10 +67,10 @@ const Sidebar = () => {
               </div>
             </Link>
 
-            <div className="flex cursor-pointer items-center space-x-4">
+            <Link to={'/explore'} className="flex cursor-pointer items-center space-x-4">
               <FaSearch className="text-xl" />
               <span className="text-xl">Explore</span>
-            </div>
+            </Link>
             <div
               className={`flex cursor-pointer items-center space-x-4 ${
                 !user ? "cursor-not-allowed opacity-50" : ""

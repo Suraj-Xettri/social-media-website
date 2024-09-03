@@ -73,10 +73,10 @@ const ResponsiveBar = ({ handleMenu }) => {
               </div>
             </Link>
 
-            <div className="flex cursor-pointer items-center space-x-4">
+            <Link to={'/explore'} className="flex cursor-pointer items-center space-x-4">
               <FaSearch className="text-xl" />
               <span className="text-xl">Explore</span>
-            </div>
+            </Link>
             <div
               className={`flex cursor-pointer items-center space-x-4 ${
                 !user ? "cursor-not-allowed opacity-50" : ""
@@ -86,14 +86,14 @@ const ResponsiveBar = ({ handleMenu }) => {
               <span className="text-xl">Notifications</span>
             </div>
 
-            <div
+            <Link to={`/bookmark/${user?._id}`}
               className={`flex cursor-pointer items-center space-x-4 ${
                 !user ? "cursor-not-allowed opacity-50" : ""
               }`}
             >
               <FaBookmark className="text-xl" />
               <span className="text-xl">Bookmarks</span>
-            </div>
+            </Link>
             <Link
               to={`/profile/${user?._id}`}
               className={`flex  items-center space-x-4 ${

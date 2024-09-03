@@ -26,7 +26,14 @@ const Nav = () => {
       <div className="w-screen h-16 bg-transparent flex justify-between items-center sm:px-4 lg:px-10 absolute backdrop-blur bg-opacity-70">
         <div className="text-white text-2xl p-2 lg:text-4xl flex gap-6 justify-center items-center">
           <div className="w-[100px] h-[50px] rounded-2xl">
-            <Link to={"/home"}> <img src="./logo.webp" alt=""  className="w-full h-full object-cover rounded-2xl"/> </Link>
+            <Link to={"/home"}>
+              {" "}
+              <img
+                src="./logo.webp"
+                alt=""
+                className="w-full h-full object-cover rounded-2xl"
+              />{" "}
+            </Link>
           </div>
         </div>
         <div className="text-primary flex pr-2 gap-3 lg:gap-8 items-center">
@@ -44,11 +51,11 @@ const Nav = () => {
       <div className="hidden lg:block">
         <Sidebar />
       </div>
-      {menu &&
+      {menu && (
         <div className="lg:hidden">
-          <ResponsiveBar handleMenu = {handleMenu} />
+          <ResponsiveBar handleMenu={handleMenu} />
         </div>
-      }
+      )}
     </div>
   );
 };
