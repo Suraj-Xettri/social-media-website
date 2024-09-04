@@ -9,7 +9,6 @@ import Bookmark from "./components/bookmark/Bookmark";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Notification from "./components/notification/Notification";
 function App() {
-  
   return (
     <div className="relative w-screen bg-[#201F31]">
       <Router>
@@ -20,8 +19,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/home" element={<Post />} />
           <Route path="/profile/:id" element={<Profile />} />
-          <Route path="/bookmark/:id" element={<Bookmark/>} />
-          <Route path="/explore" element={<Explore/>} />
+          <Route path="/bookmark/:id" element={<Bookmark />} />
+          <Route path="/explore" element={<Explore />} />
         </Routes>
         <Notification />
       </Router>

@@ -92,6 +92,7 @@ const login = async (req, res) => {
       if (existingUser.profilePicture) {
         profilePictureBase64 = `data:image/png;base64,${existingUser.profilePicture.toString('base64')}`;
       }
+      
       const activeUser = {
         _id: existingUser._id,
         username: existingUser.username,

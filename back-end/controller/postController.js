@@ -15,12 +15,22 @@ const posts = async (req, res) => {
         .populate("comments", "content");
     }
     const postsWithImages = posts.map((post) => {
-      if (post.image) {
-        const imageBase64 = post.image.toString("base64");
-        const imageData = `data:image/png;base64,${imageBase64}`; // Assuming the image is PNG
-        return { ...post.toObject(), image: imageData };
+      const postObject = post.toObject();
+
+      // Convert post image to base64 if it exists
+      if (postObject.image) {
+        const imageBase64 = postObject.image.toString("base64");
+        postObject.image = `data:image/png;base64,${imageBase64}`; // Assuming the image is PNG
       }
-      return post;
+
+      // Convert author's profile picture to base64 if it exists
+      if (postObject.author && postObject.author.profilePicture) {
+        const profilePictureBase64 =
+          postObject.author.profilePicture.toString("base64");
+        postObject.author.profilePicture = `data:image/png;base64,${profilePictureBase64}`; // Assuming the profile picture is PNG
+      }
+
+      return postObject;
     });
     res.status(200).send(postsWithImages);
   } catch (error) {

@@ -19,6 +19,7 @@ const ResponsiveBar = ({ handleMenu }) => {
   const [create, setCreate] = useState(false);
   const handleCreate = () => {
     setCreate((p) => !p);
+   
   };
 
   const dispatch = useDispatch();
@@ -56,7 +57,7 @@ const ResponsiveBar = ({ handleMenu }) => {
           <div className="flex flex-col gap-2 items-center pt-[60px]">
             <div className="h-10 w-10 rounded-full flex items-center justify-center">
               <img
-                src={`/profile/${user?.profilePic || "default.png"}`}
+                src={`${user?.profilePic || "default.png"}`}
                 className="w-full h-full rounded-full"
                 alt=""
               />
@@ -66,18 +67,25 @@ const ResponsiveBar = ({ handleMenu }) => {
             </div>
           </div>
           <div className="space-y-10">
-            <Link to={"/Home"}>
-              <div className="flex cursor-pointer items-center space-x-4">
-                <FaHome className="text-2xl" />
-                <span className="text-xl font-pmedium">Home</span>
-              </div>
-            </Link>
+            <button onClick={handleMenu}>
+              <Link to={"/Home"}>
+                <div className="flex cursor-pointer items-center space-x-4">
+                  <FaHome className="text-2xl" />
+                  <span className="text-xl font-pmedium">Home</span>
+                </div>
+              </Link>
+            </button>
 
-            <Link to={'/explore'} className="flex cursor-pointer items-center space-x-4">
+           
+            <Link
+              to={"/explore"} onClick={handleMenu}
+              className="flex cursor-pointer items-center space-x-4"
+            >
               <FaSearch className="text-xl" />
               <span className="text-xl">Explore</span>
             </Link>
-            <div
+            
+            <div onClick={handleMenu}
               className={`flex cursor-pointer items-center space-x-4 ${
                 !user ? "cursor-not-allowed opacity-50" : ""
               }`}
@@ -86,7 +94,8 @@ const ResponsiveBar = ({ handleMenu }) => {
               <span className="text-xl">Notifications</span>
             </div>
 
-            <Link to={`/bookmark/${user?._id}`}
+            <Link onClick={handleMenu}
+              to={`/bookmark/${user?._id}`}
               className={`flex cursor-pointer items-center space-x-4 ${
                 !user ? "cursor-not-allowed opacity-50" : ""
               }`}
@@ -94,7 +103,7 @@ const ResponsiveBar = ({ handleMenu }) => {
               <FaBookmark className="text-xl" />
               <span className="text-xl">Bookmarks</span>
             </Link>
-            <Link
+            <Link onClick={handleMenu}
               to={`/profile/${user?._id}`}
               className={`flex  items-center space-x-4 ${
                 !user ? "cursor-not-allowed opacity-50" : "cursor-pointer"
