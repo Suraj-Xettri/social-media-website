@@ -210,6 +210,17 @@ const profile = async (req, res) => {
       profilePictureBase64 = `data:image/png;base64,${user.profilePicture.toString('base64')}`;
     }
 
+    const postsWithBase64Images = user.post.map(post => {
+      let postImageBase64 = null;
+      if (post.image) {
+        postImageBase64 = `data:image/png;base64,${post.image.toString('base64')}`; // Convert post image buffer to base64
+      }
+      return {
+        _id: post._id,
+        image: postImageBase64,
+      };
+    });
+
     
 
     const userProfile = {
@@ -217,7 +228,7 @@ const profile = async (req, res) => {
       username: user.username,
       email: user.email,
       profilePic: profilePictureBase64,
-      post: user.post,
+      post: postsWithBase64Images,
       followers: user.followers,
       following: user.following,
     };

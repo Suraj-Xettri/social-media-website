@@ -49,7 +49,7 @@ export const Register = () => {
   };
 
   return (
-    <div className="fixed z-20 backdrop-blur-[4px] gap-24 w-screen items-center justify-center h-screen flex">
+    <div className="fixed z-20 backdrop-blur-[14px] gap-24 w-screen items-center justify-center h-screen flex">
       <div className="absolute inset-0 bg-[#201F31] bg-opacity-90 backdrop-blur-sm"></div>
       <div className="flex relative flex-col px-16 py-8 gap-2 rounded-[50px] bg-[#201F31]">
         <div className="absolute w-10 h-10 right-2 top-5 hover:opacity-50 transition  flex items-center justify-center rounded-full">

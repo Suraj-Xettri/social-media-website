@@ -39,7 +39,7 @@ const ProfileRecord = ({ id }) => {
       </div>
     );
   return (
-    <div className="changes p-10 rounded-2xl flex-[2] bg-[#2B2A3C] text-white backdrop-blur overflow-y-scroll overflow-x-hidden relative">
+    <div className="changes px-10 py-2 rounded-2xl flex-[2] bg-[#2B2A3C] text-white backdrop-blur overflow-y-scroll overflow-x-hidden relative">
       {/* Profile Header */}
       <Link to={"/home"}>
         <HiOutlineArrowLeft className="absolute text-xl lg:hidden cursor-pointer" />
@@ -99,7 +99,7 @@ const ProfileRecord = ({ id }) => {
           {profileUser?.post?.map((post, index) => (
             <div key={index} className="w-[210px] h-[300px] rounded-xl">
               <img
-                src={`/posts/${post.image}`}
+                src={`${post.image}`}
                 alt={`Post ${index + 1}`}
                 className="object-cover w-full h-full rounded-xl opacity-80"
               />
