@@ -65,7 +65,7 @@ export const Login = () => {
         <div className="flex flex-col items-center justify-center gap-4">
           <BiBot className="text-4xl text-red-600" />
           <h1 className="font-semibold text-3xl text-zinc-700">
-            Welcome To AniCluB
+            Welcome To AniHub
           </h1>
         </div>
 

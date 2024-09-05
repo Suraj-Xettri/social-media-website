@@ -7,6 +7,7 @@ const ProfileRecord = ({ id }) => {
   const [activeTab, setActiveTab] = useState(true); // Default to showing posts
   const [profileUser, setProfileUser] = useState([]);
   const [loading, setLoding] = useState(false);
+  
   const profileDetails = async () => {
     setLoding(true);
     try {

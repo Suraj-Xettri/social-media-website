@@ -210,6 +210,8 @@ const profile = async (req, res) => {
       profilePictureBase64 = `data:image/png;base64,${user.profilePicture.toString('base64')}`;
     }
 
+    
+
     const userProfile = {
       _id: user._id,
       username: user.username,
