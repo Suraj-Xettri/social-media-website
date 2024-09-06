@@ -25,11 +25,11 @@ const Nav = () => {
     <div>
       <div className="w-screen h-16 bg-transparent flex justify-between items-center sm:px-4 lg:px-10 absolute backdrop-blur bg-opacity-70">
         <div className="text-white text-2xl p-2 lg:text-4xl flex gap-6 justify-center items-center">
-          <div className="w-[100px] h-[50px] rounded-2xl">
+          <div className="w-[80px] h-[50px] rounded-2xl">
             <Link to={"/home"}>
               {" "}
               <img
-                src="./logo.webp"
+                src="/logo.png"
                 alt=""
                 className="w-full h-full object-cover rounded-2xl"
               />{" "}
