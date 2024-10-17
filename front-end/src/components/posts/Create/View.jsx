@@ -164,8 +164,10 @@ const View = () => {
   };
   useEffect(() => {
     getPosts();
-  }, [follow, unfollow]); // Added dependency array to avoid infinite loop
+  }, []); // Added dependency array to avoid infinite loop
 
+
+  console.log(comment)
   return (
     <div className="relative p-3">
       {posts.map((post) => (
@@ -298,7 +300,7 @@ const View = () => {
                           className="flex gap-2 items-center mt-4 mb-2"
                         >
                           <img
-                            src={`/profile/${com.author.profilePicture}`}
+                            src={com.author.profilePicture?.data}
                             alt={com.author.username}
                             className="w-8 h-8 rounded-full"
                           />
